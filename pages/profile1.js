@@ -46,7 +46,17 @@ export default function ProfilePage({ ...rest }) {
   const navImageClasses = classNames(classes.imgRounded, classes.imgGallery);
   return (
     <div>
-     
+      <Header
+        color="transparent"
+        brand="NextJS Material Kit PRO"
+        links={<HeaderLinks dropdownHoverColor="info" />}
+        fixed
+        changeColorOnScroll={{
+          height: 200,
+          color: "info",
+        }}
+        {...rest}
+      />
       <Parallax
         image="/img/examples/city.jpg"
         filter="dark"

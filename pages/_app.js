@@ -19,6 +19,8 @@ import ReactDOM from "react-dom";
 import App from "next/app";
 import Head from "next/head";
 import Router from "next/router";
+import Header from "/components/Header/Header.js";
+import HeaderLinks from "/components/Header/HeaderLinks.js";
 import {
   ThemeProvider,
   createTheme,
@@ -109,10 +111,20 @@ export default class MyApp extends App {
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
           />
           <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE" />
-          <title>NextJS Material Kit by Creative Tim</title>
+          <title>Netflix pirata</title>
         </Head>
         <ThemeProvider theme={theme}>
           <StyledEngineProvider injectFirst>
+          <Header
+        brand="NETFLIX PIRATA"
+        links={<HeaderLinks dropdownHoverColor="danger" />}
+        fixed
+        color="info"
+        changeColorOnScroll={{
+          height: 300,
+          color: "danger"
+        }}
+      />
             <Component {...pageProps} />
           </StyledEngineProvider>
         </ThemeProvider>

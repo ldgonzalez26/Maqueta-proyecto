@@ -23,6 +23,7 @@ import SectionExamples from "/pages-sections/presentation-page/SectionExamples.j
 import SectionFreeDemo from "/pages-sections/presentation-page/SectionFreeDemo.js";
 import SectionOverview from "/pages-sections/presentation-page/SectionOverview.js";
 import SectionPricing from "/pages-sections/presentation-page/SectionPricing.js";
+import SectionFeatures from "/pages-sections/pricing-page/SectionFeatures.js";
 
 import presentationStyle from "/styles/jss/nextjs-material-kit-pro/pages/presentationStyle.js";
 
@@ -36,46 +37,37 @@ export default function PresentationPage() {
   const classes = useStyles();
   return (
     <div>
-      <Header
-        brand="NextJS Material Kit PRO"
-        links={<HeaderLinks dropdownHoverColor="info" />}
-        fixed
-        color="transparent"
-        changeColorOnScroll={{
-          height: 400,
-          color: "info"
-        }}
-      />
-      <Parallax image="/img/nextjs_header.jpg" className={classes.parallax}>
+      
+      <Parallax image="https://cdn.computerhoy.com/sites/navi.axelspringer.es/public/media/image/2018/06/series-netflix.jpg">
         <div className={classes.container}>
           <GridContainer>
             <GridItem>
               <div className={classes.brand}>
                 <h1>
-                  NextJS Material Kit
-                  <span className={classes.proBadge}>PRO</span>
+                  NETFLIX PIRATA CUENTAS VENTA 
+                  
                 </h1>
                 <h3 className={classes.title}>
-                  A Badass Material-UI Kit based on Material Design.
+                  EL MEJOR LUGAR PARA COMPRAR CUENTAS
                 </h3>
               </div>
             </GridItem>
           </GridContainer>
         </div>
       </Parallax>
+      
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <SectionDescription />
-        <SectionComponents />
-        <SectionCards />
-        <SectionContent />
-        <SectionSections />
-        <SectionExamples />
-        <SectionFreeDemo />
-        <SectionOverview />
-      </div>
       <SectionPricing />
+          <hr />
+          <SectionFeatures />
+      </div>
+
+
+
+      
+      
       <Footer
-        theme="white"
+        theme=""
         content={
           <div>
             <div className={classes.left}>
