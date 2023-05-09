@@ -35,6 +35,8 @@ import "/styles/css/react-demo.css";
 
 import "animate.css/animate.min.css";
 
+import { AuthContextProvider } from "../context/authContext"
+
 const theme = createTheme({
   components: {
     MuiSelect: {
@@ -110,22 +112,26 @@ export default class MyApp extends App {
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
           />
-          <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE" />
+          {/* <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE" /> */}
           <title>Netflix pirata</title>
         </Head>
         <ThemeProvider theme={theme}>
           <StyledEngineProvider injectFirst>
-          <Header
-        brand="NETFLIX PIRATA"
-        links={<HeaderLinks dropdownHoverColor="danger" />}
-        fixed
-        color="info"
-        changeColorOnScroll={{
-          height: 300,
-          color: "danger"
-        }}
-      />
-            <Component {...pageProps} />
+            <AuthContextProvider>
+              <>
+                <Header
+                  brand="NETFLIX PIRATA"
+                  links={<HeaderLinks dropdownHoverColor="danger" />}
+                  fixed
+                  color="info"
+                  changeColorOnScroll={{
+                    height: 300,
+                    color: "danger"
+                  }}
+                />
+                <Component {...pageProps} />
+              </>
+            </AuthContextProvider>
           </StyledEngineProvider>
         </ThemeProvider>
       </React.Fragment>

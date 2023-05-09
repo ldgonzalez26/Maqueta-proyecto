@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 import makeStyles from '@mui/styles/makeStyles';
@@ -31,11 +31,16 @@ import styles from "/styles/jss/nextjs-material-kit-pro/pages/ecommerceStyle.js"
 //Propio
 import FooterGlobal from "../componentesPropios/FooterGlobal"
 import { db, query, collection, doc, addDoc, setDoc, getDocs } from "../firebaseConexion/firebaseConfig.js"
+import {signOutFirebase} from "../firebaseConexion/signout"
+import {useAuthContext} from "../context/authContext.js"
 import { Plan } from "../clasesTS/Plan.ts";
 
 const useStyles = makeStyles(styles);
 
 export default function CatalogoPage() {
+
+  const {user} = useAuthContext()
+  console.log(user)
 
   const [planes, setPlanes] = useState([])
 
@@ -44,8 +49,8 @@ export default function CatalogoPage() {
   React.useEffect(() => {
     //window.scrollTo(0, 0);
     //document.body.scrollTop = 0;
-    //getPlanes();
-  });
+    getPlanes();
+  }, []);
 
   const handleSimple = (event) => {
     setSimpleSelect(event.target.value);
@@ -81,6 +86,8 @@ export default function CatalogoPage() {
 
   const consultar = () => {
     console.log(planes)
+    console.log(user)
+    signOutFirebase()
   }
 
   const classes = useStyles();
@@ -122,7 +129,7 @@ export default function CatalogoPage() {
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <button onClick={() => { consultar() }}>Nuevo</button>
+        <button onClick={() => consultar()}>Nuevo</button>
         <SectionPlans planes={planes} />
       </div>
 

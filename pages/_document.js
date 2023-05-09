@@ -1,6 +1,7 @@
 import React from "react";
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { ServerStyleSheets } from "@mui/styles";
+import {AuthContextProvider} from "../context/authContext"
 
 class MyDocument extends Document {
   render() {
@@ -27,9 +28,9 @@ class MyDocument extends Document {
           />
         </Head>
         <body>
-          <div id="page-transition"></div>
-          <Main />
-          <NextScript />
+            <div id="page-transition"></div>
+            <Main />
+            <NextScript />
         </body>
       </Html>
     );
