@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // core components
@@ -18,72 +18,87 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 
 import styles from "/styles/jss/nextjs-material-kit-pro/pages/ecommerceSections/latestOffersStyle.js";
+import ShoppingCart from "@mui/icons-material/ShoppingCart";
+
+import {useAuthContext} from "../context/authContext.js"
+import {agregarAlCarrito as addProducto} from "../firebaseConexion/carrito"
 
 const useStyles = makeStyles(styles);
 
 export default function SectionLatestOffers(props) {
 
   const { planes } = props
+  const {user} = useAuthContext()
   const classes = useStyles();
   const [simpleSelect, setSimpleSelect] = useState("");
   const handleSimple = (event) => {
     setSimpleSelect(event.target.value);
+
   };
+
+  const agregarAlCarrito = (producto) =>{
+    console.log(user.uid, producto)
+    addProducto(user.uid, JSON.parse(JSON.stringify(producto))).then(res => {
+      console.log("añadido: ", res)
+    }).catch(error => {
+      console.log(error)
+    })
+  }
 
   return (
     <div className={classes.section}>
       <div className={classes.container}>
         <h2>Planes y Servicios disponibles</h2>
         <Select
-                      MenuProps={{
-                        className: classes.selectMenu,
-                      }}
-                      classes={{
-                        select: classes.select,
-                      }}
-                      value={simpleSelect}
-                      onChange={handleSimple}
-                      inputProps={{
-                        name: "simpleSelect",
-                        id: "simple-select",
-                      }}
-                    >
-                      <MenuItem
-                        disabled
-                        classes={{
-                          root: classes.selectMenuItem,
-                        }}
-                      >
-                        Single Select
+          MenuProps={{
+            className: classes.selectMenu,
+          }}
+          classes={{
+            select: classes.select,
+          }}
+          value={simpleSelect}
+          onChange={handleSimple}
+          inputProps={{
+            name: "simpleSelect",
+            id: "simple-select",
+          }}
+        >
+          <MenuItem
+            disabled
+            classes={{
+              root: classes.selectMenuItem,
+            }}
+          >
+            Single Select
                       </MenuItem>
-                      <MenuItem
-                        classes={{
-                          root: classes.selectMenuItem,
-                          selected: classes.selectMenuItemSelected,
-                        }}
-                        value="2"
-                      >
-                        Paris
+          <MenuItem
+            classes={{
+              root: classes.selectMenuItem,
+              selected: classes.selectMenuItemSelected,
+            }}
+            value="2"
+          >
+            Paris
                       </MenuItem>
-                      <MenuItem
-                        classes={{
-                          root: classes.selectMenuItem,
-                          selected: classes.selectMenuItemSelected,
-                        }}
-                        value="3"
-                      >
-                        Bucharest
+          <MenuItem
+            classes={{
+              root: classes.selectMenuItem,
+              selected: classes.selectMenuItemSelected,
+            }}
+            value="3"
+          >
+            Bucharest
                       </MenuItem>
-                      <MenuItem
-                        classes={{
-                          root: classes.selectMenuItem,
-                          selected: classes.selectMenuItemSelected,
-                        }}
-                        value="4"
-                      >
-                        Rome
+          <MenuItem
+            classes={{
+              root: classes.selectMenuItem,
+              selected: classes.selectMenuItemSelected,
+            }}
+            value="4"
+          >
+            Rome
                       </MenuItem>
-                    </Select>
+        </Select>
         <GridContainer>
 
           {planes.map(plan =>
@@ -103,31 +118,32 @@ export default function SectionLatestOffers(props) {
                   />
                 </CardHeader>
                 <CardBody className={classes.textCenter} plain>
-<h4 className={classes.cardTitle}>{plan.nombre}</h4>
+                  <h4 className={classes.cardTitle}>{plan.nombre}</h4>
                   <p className={classes.cardDescription}>
                     {plan.descripcion}
-                </p>
+                  </p>
                 </CardBody>
                 <CardFooter plain>
                   <div className={classes.priceContainer}>
-{/*                     <span className={classNames(classes.price, classes.priceOld)}>
+                    {/*                     <span className={classNames(classes.price, classes.priceOld)}>
                       {" "}
                       €1,430
                   </span> */}
                     <span className={classNames(classes.price, classes.priceNew)}>
                       {plan.precio + " $"}
-                  </span>
+                    </span>
                   </div>
                   <div className={classNames(classes.stats, classes.mlAuto)}>
                     <Tooltip
                       id="tooltip-top"
-                      title="Saved to Wishlist"
+                      title="Añadir al carrito"
                       placement="top"
                       classes={{ tooltip: classes.tooltip }}
                     >
-                      <Button justIcon simple color="rose">
-                        <Favorite />
+                      <Button onClick={() => agregarAlCarrito(plan)} justIcon simple color="rose">
+                        + <ShoppingCart />
                       </Button>
+
                     </Tooltip>
                   </div>
                 </CardFooter>

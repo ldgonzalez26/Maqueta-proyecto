@@ -113,14 +113,14 @@ export default class MyApp extends App {
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
           />
           {/* <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE" /> */}
-          <title>Netflix pirata</title>
+          <title>LATINOVE</title>
         </Head>
         <ThemeProvider theme={theme}>
           <StyledEngineProvider injectFirst>
             <AuthContextProvider>
               <>
                 <Header
-                  brand="NETFLIX PIRATA"
+                  brand="Latinove"
                   links={<HeaderLinks dropdownHoverColor="danger" />}
                   fixed
                   color="info"

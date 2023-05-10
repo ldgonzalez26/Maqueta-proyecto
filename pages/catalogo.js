@@ -40,7 +40,7 @@ const useStyles = makeStyles(styles);
 export default function CatalogoPage() {
 
   const {user} = useAuthContext()
-  console.log(user)
+  /* console.log(user) */
 
   const [planes, setPlanes] = useState([])
 
@@ -177,6 +177,7 @@ export default function CatalogoPage() {
                         />
                       </GridItem>
                       <GridItem xs={12} sm={6} md={6} lg={4}>
+                      
                         <Button
                           color="rose"
                           block

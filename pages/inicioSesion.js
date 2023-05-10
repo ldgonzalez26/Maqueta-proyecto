@@ -1,5 +1,6 @@
 /*eslint-disable*/
 import React, { useRef, useState} from "react";
+import { useRouter } from 'next/router';
 import makeStyles from "@mui/styles/makeStyles";
 import InputAdornment from "@mui/material/InputAdornment";
 import Checkbox from "@mui/material/Checkbox";
@@ -34,7 +35,9 @@ import signupPageStyle from "/styles/jss/nextjs-material-kit-pro/pages/signupPag
 
 const useStyles = makeStyles(signupPageStyle);
 
-export default function Registro({ ...rest }) {
+export default function InicioSesion({ ...rest }) {
+
+  const router = useRouter();
   const [checked, setChecked] = React.useState([1]);
   const handleToggle = (value) => {
     const currentIndex = checked.indexOf(value);
@@ -55,18 +58,14 @@ export default function Registro({ ...rest }) {
   const [inputEmail, setInputEmail] = useState("")
   const [inputPassword, setInputPassword] = useState("")
 
-  const registrar = () => {
-    console.log(inputEmail)
-    console.log(inputPassword)
-    signUp(inputEmail, inputPassword).then(res => {
-      console.log(res)
-    })
-  }
-
   const iniciar = () => {
     signIn(inputEmail, inputPassword).then(res => {
       console.log(res)
+      router.push('/catalogo');
+    }).catch(error => {
+      console.log(error)
     })
+    
   }
 
   return (
@@ -84,30 +83,16 @@ export default function Registro({ ...rest }) {
           <GridContainer justifyContent="center">
             <GridItem xs={12} sm={10} md={10}>
               <Card className={classes.cardSignup}>
-                <h2 className={classes.cardTitle}>Registro</h2>
+                <h2 className={classes.cardTitle}>Iniciar Sesión</h2>
                 <CardBody>
                   <GridContainer justifyContent="center">
                     <GridItem xs={12} sm={5} md={5}>
-{/*                       <InfoArea
+                      <InfoArea
                         className={classes.infoArea}
-                        title="Marketing"
-                        description="We've created the marketing campaign of the website. It was a very interesting collaboration."
+                        title="A cerca de nosotros"
+                        description="En Latinove queremos hacer más facil tu proceso de contratación de cuentas de Streaming"
                         icon={Timeline}
                         iconColor="rose"
-                      />
-                      <InfoArea
-                        className={classes.infoArea}
-                        title="Fully Coded in HTML5"
-                        description="We've developed the website with HTML5 and CSS3. The client has access to the code using GitHub."
-                        icon={Code}
-                        iconColor="primary"
-                      /> */}
-                      <InfoArea
-                        className={classes.infoArea}
-                        title="¿Por qué registrarse?"
-                        description="Al registrarte en Latinove adquieres la posibilidad de contratar servicios de Streaming y podrás contactarte a nuestra árae de soporte en caso de que tengas algún problema."
-                        icon={Group}
-                        iconColor="info"
                       />
                     </GridItem>
                     <GridItem xs={12} sm={5} md={5}>
@@ -167,39 +152,28 @@ export default function Registro({ ...rest }) {
                             placeholder: "Contraseña",
                           }}
                         />
-{/*                         <FormControlLabel
+                        <FormControlLabel
                           classes={{
                             label: classes.label,
                           }}
                           control={
-                            <Checkbox
-                              tabIndex={-1}
-                              onClick={() => handleToggle(1)}
-                              checkedIcon={
-                                <Check className={classes.checkedIcon} />
-                              }
-                              icon={<Check className={classes.uncheckedIcon} />}
-                              classes={{
-                                checked: classes.checked,
-                                root: classes.checkRoot,
-                              }}
-                              checked={checked.indexOf(1) !== -1 ? true : false}
-                            />
+                            <></>
                           }
                           label={
                             <span>
-                              I agree to the{" "}
-                              <a href="#pablo">terms and conditions</a>.
+                              ¿No posees una cuenta?{" "}
+                              <a href="#pablo">Registrarse</a>.
                             </span>
                           }
-                        /> */}
+                        />
+                        <br />
                         <br />
                         <div className={classes.textCenter}>
                           <Button
-                            onClick={registrar}
+                            onClick={iniciar}
                             round color="primary">
-                            Registrarse
-                          </Button>                      
+                            Iniciar Sesión
+                          </Button>                          
                         </div>
                       </form>
                     </GridItem>
