@@ -79,10 +79,10 @@ export default function HeaderLinks() {
         <ListItem className={classes.listItem}>
           <Button
             className={classes.navLink}
-            onClick={() => navegar("home")}
+            onClick={() => navegar("catalogo")}
             color='transparent'
           >
-            Home
+            Inicio
           </Button>
         </ListItem>
         <ListItem className={classes.listItem}>
@@ -91,7 +91,7 @@ export default function HeaderLinks() {
             onClick={(e) => e.preventDefault()}
             color='transparent'
           >
-            About us
+            Tickets
           </Button>
         </ListItem>
         <ListItem className={classes.listItem}>
@@ -100,18 +100,10 @@ export default function HeaderLinks() {
             onClick={(e) => e.preventDefault()}
             color='transparent'
           >
-            Products
+            Conocenos
           </Button>
         </ListItem>
-        <ListItem className={classes.listItem}>
-          <Button
-            className={classes.navLink}
-            onClick={(e) => e.preventDefault()}
-            color='transparent'
-          >
-            Contact us
-          </Button>
-        </ListItem>
+        
       </List>
       <List className={classes.list + " " + classes.mlAuto}>
         <ListItem className={classes.listItem}>

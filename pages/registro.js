@@ -180,55 +180,11 @@ export default function Registro({ ...rest }) {
         <Footer
           content={
             <div>
-              <div className={classes.left}>
-                <List className={classes.list}>
-                  <ListItem className={classes.inlineBlock}>
-                    <a
-                      href='https://www.creative-tim.com/?ref=njsmkp-signup'
-                      target='_blank'
-                      className={classes.block}
-                    >
-                      Creative Tim
-                    </a>
-                  </ListItem>
-                  <ListItem className={classes.inlineBlock}>
-                    <a
-                      href='https://www.creative-tim.com/presentation?ref=njsmkp-signup'
-                      target='_blank'
-                      className={classes.block}
-                    >
-                      About us
-                    </a>
-                  </ListItem>
-                  <ListItem className={classes.inlineBlock}>
-                    <a
-                      href='http://blog.creative-tim.com/?ref=njsmkp-signup'
-                      className={classes.block}
-                    >
-                      Blog
-                    </a>
-                  </ListItem>
-                  <ListItem className={classes.inlineBlock}>
-                    <a
-                      href='https://www.creative-tim.com/license?ref=njsmkp-signup'
-                      target='_blank'
-                      className={classes.block}
-                    >
-                      Licenses
-                    </a>
-                  </ListItem>
-                </List>
-              </div>
               <div className={classes.right}>
-                &copy; {1900 + new Date().getYear()} , made with{" "}
-                <Favorite className={classes.icon} /> by{" "}
-                <a
-                  href='https://www.creative-tim.com?ref=njsmkp-signup'
-                  target='_blank'
-                >
-                  Creative Tim
+                &copy; {1900 + new Date().getYear()}
+                <a href='' target='_blank'>
+                  , Hivek
                 </a>{" "}
-                for a better web.
               </div>
             </div>
           }
