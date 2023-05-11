@@ -1,23 +1,15 @@
 /*eslint-disable*/
-import React, { useRef, useState} from "react";
+import React, { useState } from "react";
 import makeStyles from "@mui/styles/makeStyles";
 import InputAdornment from "@mui/material/InputAdornment";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import Icon from "@mui/material/Icon";
 // @mui/icons-material
-import Timeline from "@mui/icons-material/Timeline";
-import Code from "@mui/icons-material/Code";
 import Group from "@mui/icons-material/Group";
-import Face from "@mui/icons-material/Face";
 import Email from "@mui/icons-material/Email";
-import Check from "@mui/icons-material/Check";
 import Favorite from "@mui/icons-material/Favorite";
 // core components
-import Header from "/components/Header/Header.js";
-import HeaderLinks from "/components/Header/HeaderLinks.js";
 import Footer from "/components/Footer/Footer.js";
 import GridContainer from "/components/Grid/GridContainer.js";
 import GridItem from "/components/Grid/GridItem.js";
@@ -26,15 +18,17 @@ import Card from "/components/Card/Card.js";
 import CardBody from "/components/Card/CardBody.js";
 import InfoArea from "/components/InfoArea/InfoArea.js";
 import CustomInput from "/components/CustomInput/CustomInput.js";
+import FormControlLabel from "@mui/material/FormControlLabel";
 //firebase
-import signUp from "../firebaseConexion/signup"
-import signIn from "../firebaseConexion/singin"
+import signUp from "../firebaseConexion/signup";
 
 import signupPageStyle from "/styles/jss/nextjs-material-kit-pro/pages/signupPageStyle.js";
+import { useRouter } from "next/router";
 
 const useStyles = makeStyles(signupPageStyle);
 
 export default function Registro({ ...rest }) {
+  const router = useRouter();
   const [checked, setChecked] = React.useState([1]);
   const handleToggle = (value) => {
     const currentIndex = checked.indexOf(value);
@@ -52,26 +46,24 @@ export default function Registro({ ...rest }) {
   });
   const classes = useStyles();
 
-  const [inputEmail, setInputEmail] = useState("")
-  const [inputPassword, setInputPassword] = useState("")
+  const [inputEmail, setInputEmail] = useState("");
+  const [inputPassword, setInputPassword] = useState("");
 
   const registrar = () => {
-    console.log(inputEmail)
-    console.log(inputPassword)
-    signUp(inputEmail, inputPassword).then(res => {
-      console.log(res)
-    })
-  }
-
-  const iniciar = () => {
-    signIn(inputEmail, inputPassword).then(res => {
-      console.log(res)
-    })
-  }
-
+    signUp(inputEmail, inputPassword).then((res) => {
+      if (res.error) {
+        console.log("hubo un error, mostrar algo lindo");
+        console.log("error", res.error);
+      } else {
+        router.push("inicioSesion");
+      }
+    });
+  };
+  const goTologin = () => {
+    router.push("inicioSesion");
+  };
   return (
     <div>
-
       <div
         className={classes.pageHeader}
         style={{
@@ -81,14 +73,14 @@ export default function Registro({ ...rest }) {
         }}
       >
         <div className={classes.container}>
-          <GridContainer justifyContent="center">
+          <GridContainer justifyContent='center'>
             <GridItem xs={12} sm={10} md={10}>
               <Card className={classes.cardSignup}>
                 <h2 className={classes.cardTitle}>Registro</h2>
                 <CardBody>
-                  <GridContainer justifyContent="center">
+                  <GridContainer justifyContent='center'>
                     <GridItem xs={12} sm={5} md={5}>
-{/*                       <InfoArea
+                      {/*                       <InfoArea
                         className={classes.infoArea}
                         title="Marketing"
                         description="We've created the marketing campaign of the website. It was a very interesting collaboration."
@@ -104,30 +96,13 @@ export default function Registro({ ...rest }) {
                       /> */}
                       <InfoArea
                         className={classes.infoArea}
-                        title="¿Por qué registrarse?"
-                        description="Al registrarte en Latinove adquieres la posibilidad de contratar servicios de Streaming y podrás contactarte a nuestra árae de soporte en caso de que tengas algún problema."
+                        title='¿Por qué registrarse?'
+                        description='Al registrarte en Latinove adquieres la posibilidad de contratar servicios de Streaming y podrás contactarte a nuestra árae de soporte en caso de que tengas algún problema.'
                         icon={Group}
-                        iconColor="info"
+                        iconColor='info'
                       />
                     </GridItem>
                     <GridItem xs={12} sm={5} md={5}>
-                      {/* <div className={classes.textCenter}>
-                        <Button justIcon round color="twitter">
-                          <i className={classes.socials + " fab fa-twitter"} />
-                        </Button>
-                        {` `}
-                        <Button justIcon round color="dribbble">
-                          <i className={classes.socials + " fab fa-dribbble"} />
-                        </Button>
-                        {` `}
-                        <Button justIcon round color="facebook">
-                          <i
-                            className={classes.socials + " fab fa-facebook-f"}
-                          />
-                        </Button>
-                        {` `}
-                        <h4 className={classes.socialTitle}>or be classical</h4>
-                      </div> */}
                       <form className={classes.form}>
                         <CustomInput
                           setText={setInputEmail}
@@ -138,7 +113,7 @@ export default function Registro({ ...rest }) {
                           inputProps={{
                             startAdornment: (
                               <InputAdornment
-                                position="start"
+                                position='start'
                                 className={classes.inputAdornment}
                               >
                                 <Email className={classes.inputAdornmentIcon} />
@@ -156,7 +131,7 @@ export default function Registro({ ...rest }) {
                           inputProps={{
                             startAdornment: (
                               <InputAdornment
-                                position="start"
+                                position='start'
                                 className={classes.inputAdornment}
                               >
                                 <Icon className={classes.inputAdornmentIcon}>
@@ -165,41 +140,34 @@ export default function Registro({ ...rest }) {
                               </InputAdornment>
                             ),
                             placeholder: "Contraseña",
+                            type: "password",
                           }}
                         />
-{/*                         <FormControlLabel
+                        <FormControlLabel
                           classes={{
                             label: classes.label,
                           }}
-                          control={
-                            <Checkbox
-                              tabIndex={-1}
-                              onClick={() => handleToggle(1)}
-                              checkedIcon={
-                                <Check className={classes.checkedIcon} />
-                              }
-                              icon={<Check className={classes.uncheckedIcon} />}
-                              classes={{
-                                checked: classes.checked,
-                                root: classes.checkRoot,
-                              }}
-                              checked={checked.indexOf(1) !== -1 ? true : false}
-                            />
-                          }
+                          control={<></>}
                           label={
                             <span>
-                              I agree to the{" "}
-                              <a href="#pablo">terms and conditions</a>.
+                              ¿Ya tienes cuenta?{" "}
+                              <a
+                                onClick={() => {
+                                  goTologin();
+                                }}
+                              >
+                                Inicia sesion
+                              </a>
+                              .
                             </span>
                           }
-                        /> */}
+                        />
+                        <br />
                         <br />
                         <div className={classes.textCenter}>
-                          <Button
-                            onClick={registrar}
-                            round color="primary">
+                          <Button onClick={registrar} round color='primary'>
                             Registrarse
-                          </Button>                      
+                          </Button>
                         </div>
                       </form>
                     </GridItem>
@@ -216,8 +184,8 @@ export default function Registro({ ...rest }) {
                 <List className={classes.list}>
                   <ListItem className={classes.inlineBlock}>
                     <a
-                      href="https://www.creative-tim.com/?ref=njsmkp-signup"
-                      target="_blank"
+                      href='https://www.creative-tim.com/?ref=njsmkp-signup'
+                      target='_blank'
                       className={classes.block}
                     >
                       Creative Tim
@@ -225,8 +193,8 @@ export default function Registro({ ...rest }) {
                   </ListItem>
                   <ListItem className={classes.inlineBlock}>
                     <a
-                      href="https://www.creative-tim.com/presentation?ref=njsmkp-signup"
-                      target="_blank"
+                      href='https://www.creative-tim.com/presentation?ref=njsmkp-signup'
+                      target='_blank'
                       className={classes.block}
                     >
                       About us
@@ -234,7 +202,7 @@ export default function Registro({ ...rest }) {
                   </ListItem>
                   <ListItem className={classes.inlineBlock}>
                     <a
-                      href="http://blog.creative-tim.com/?ref=njsmkp-signup"
+                      href='http://blog.creative-tim.com/?ref=njsmkp-signup'
                       className={classes.block}
                     >
                       Blog
@@ -242,8 +210,8 @@ export default function Registro({ ...rest }) {
                   </ListItem>
                   <ListItem className={classes.inlineBlock}>
                     <a
-                      href="https://www.creative-tim.com/license?ref=njsmkp-signup"
-                      target="_blank"
+                      href='https://www.creative-tim.com/license?ref=njsmkp-signup'
+                      target='_blank'
                       className={classes.block}
                     >
                       Licenses
@@ -255,8 +223,8 @@ export default function Registro({ ...rest }) {
                 &copy; {1900 + new Date().getYear()} , made with{" "}
                 <Favorite className={classes.icon} /> by{" "}
                 <a
-                  href="https://www.creative-tim.com?ref=njsmkp-signup"
-                  target="_blank"
+                  href='https://www.creative-tim.com?ref=njsmkp-signup'
+                  target='_blank'
                 >
                   Creative Tim
                 </a>{" "}

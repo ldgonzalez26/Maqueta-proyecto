@@ -35,7 +35,7 @@ import "/styles/css/react-demo.css";
 
 import "animate.css/animate.min.css";
 
-import { AuthContextProvider } from "../context/authContext"
+import { AuthContextProvider } from "../context/authContext";
 
 const theme = createTheme({
   components: {
@@ -57,7 +57,6 @@ const theme = createTheme({
 });
 
 Router.events.on("routeChangeStart", (url) => {
-  console.log(`Loading: ${url}`);
   document.body.classList.add("body-page-transition");
   ReactDOM.render(
     <PageChange path={url} />,
@@ -91,7 +90,7 @@ export default class MyApp extends App {
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 `);
-    document.insertBefore(comment, document.documentElement);
+    //document.insertBefore(comment, document.documentElement);
   }
   static async getInitialProps({ Component, router, ctx }) {
     let pageProps = {};
@@ -109,8 +108,8 @@ export default class MyApp extends App {
       <React.Fragment>
         <Head>
           <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
+            name='viewport'
+            content='width=device-width, initial-scale=1, shrink-to-fit=no'
           />
           {/* <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE" /> */}
           <title>LATINOVE</title>
@@ -120,13 +119,13 @@ export default class MyApp extends App {
             <AuthContextProvider>
               <>
                 <Header
-                  brand="Latinove"
-                  links={<HeaderLinks dropdownHoverColor="danger" />}
+                  brand='Latinove'
+                  links={<HeaderLinks dropdownHoverColor='danger' />}
                   fixed
-                  color="info"
+                  color='info'
                   changeColorOnScroll={{
                     height: 300,
-                    color: "danger"
+                    color: "danger",
                   }}
                 />
                 <Component {...pageProps} />

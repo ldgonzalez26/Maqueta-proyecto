@@ -1,75 +1,60 @@
-import { db } from "./firebaseConfig"
+import { db } from "./firebaseConfig";
 import {
-    getFirestore,
-    collection,
-    addDoc,
-    setDoc,
-    doc,
-    getDoc,
-    getDocs,
-    updateDoc,
-    query
-} from "firebase/firestore"
+  getFirestore,
+  collection,
+  addDoc,
+  setDoc,
+  doc,
+  getDoc,
+  getDocs,
+  updateDoc,
+  query,
+} from "firebase/firestore";
 
-export const crearInventarioTicketsCompra = async (userId) => {
-    await setDoc(doc(db, "carrito", userId), {
-        id: userId,
-        productos: [],
-        totalProductos: 0
-    })
-}
+export const crearTicketCompra = async (userId) => {
+  await setDoc(doc(db, "ticketsCompra", userId), {
+    id: userId,
+    compras: [],
+    totalCompras: 0,
+  });
+};
 
-export const agregarAlCarrito = async (userId, producto) => {
-    /*     await setDoc(doc(db, "carrito", userId), producto, 
-        {merge: true}); */
+export const agregarCompra = async (userId, compra) => {
+  const docRef = await getDoc(doc(db, "ticketsCompra", userId));
+  const data = docRef.data();
+  let compras = data.compras;
+  compra.status = "En proceso";
+  let totalCompras = data.totalCompras ? data.totalCompras : 0;
+  compras.push(compra);
 
-    const docRef = await getDoc(doc(db, "carrito", userId))
-    const data = docRef.data()
-    let productosEnCarrito = data.productos
-    let productoEncontrado = false
-    producto.precioTotal = producto.precio
+  await updateDoc(doc(db, "ticketsCompra", userId), {
+    id: userId,
+    compras: compras,
+    totalCompras: totalCompras + 1,
+  });
+};
 
-    for (let i = 0; i < productosEnCarrito.length; i++) {
+export const getCompras = async (userId) => {
+  const docRef = await getDoc(doc(db, "ticketsCompra", userId));
+  const data = docRef.data();
+  return data.compras;
+};
 
-        if (productosEnCarrito[i].categoria == producto.categoria &&
-            productosEnCarrito[i].duracion == producto.duracion &&
-            productosEnCarrito[i].nombre == producto.nombre &&
-            productosEnCarrito[i].precio == producto.precio) {
+export const limpiarCompras = async (userId) => {
+  await updateDoc(doc(db, "ticketsCompra", userId), {
+    id: userId,
+    compras: [],
+    totalCompras: 0,
+  });
+};
 
-            productoEncontrado = true
-            productosEnCarrito[i].cantidad = productosEnCarrito[i].cantidad + 1
-            productosEnCarrito[i].precioTotal = productosEnCarrito[i].precioTotal + producto.precio
-            break;
+export const comprasExist = async (userId) => {
+  const docRef = doc(db, "ticketsCompra", userId);
+  const docSnap = await getDoc(docRef);
 
-        }
-    }
-
-    if (!productoEncontrado) {
-        producto.cantidad = 1
-        productosEnCarrito.push(producto)
-    }
-
-
-    await updateDoc(doc(db, "carrito", userId), {
-        id: userId,
-        productos: productosEnCarrito,
-        totalProductos: data.totalProductos + 1
-    })
-
-}
-
-export const getProductosEnCarrito = async (userId) => {
-    const docRef = await getDoc(doc(db, "carrito", userId))
-    const data = docRef.data()
-    return data.productos
-}
-
-export const limpiarCarrito = async (userId) =>{
-
-    await updateDoc(doc(db, "carrito", userId), {
-        id: userId,
-        productos: [],
-        totalProductos: 0
-    })
-
-}
+  if (docSnap.exists()) {
+    return true;
+  } else {
+    return false;
+  }
+};

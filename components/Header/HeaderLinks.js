@@ -1,52 +1,39 @@
 /* eslint-disable */
-import React from "react";
+import React, { useEffect, useState } from "react";
 // nodejs library to set properties for components
 import PropTypes from "prop-types";
 // react components for routing our app without refresh
-import Link from "next/link";
-
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import Icon from "@mui/material/Icon";
-import Hidden from "@mui/material/Hidden";
 
 // @mui/icons-material
-import Apps from "@mui/icons-material/Apps";
-import ShoppingCart from "@mui/icons-material/ShoppingCart";
-import ViewDay from "@mui/icons-material/ViewDay";
-import Dns from "@mui/icons-material/Dns";
-import Build from "@mui/icons-material/Build";
-import ListIcon from "@mui/icons-material/List";
-import People from "@mui/icons-material/People";
-import Assignment from "@mui/icons-material/Assignment";
-import MonetizationOn from "@mui/icons-material/MonetizationOn";
-import Chat from "@mui/icons-material/Chat";
-import Call from "@mui/icons-material/Call";
-import ViewCarousel from "@mui/icons-material/ViewCarousel";
-import AccountBalance from "@mui/icons-material/AccountBalance";
-import ArtTrack from "@mui/icons-material/ArtTrack";
-import ViewQuilt from "@mui/icons-material/ViewQuilt";
-import LocationOn from "@mui/icons-material/LocationOn";
-import Fingerprint from "@mui/icons-material/Fingerprint";
-import AttachMoney from "@mui/icons-material/AttachMoney";
-import Store from "@mui/icons-material/Store";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import PersonAdd from "@mui/icons-material/PersonAdd";
-import Layers from "@mui/icons-material/Layers";
+import LogOut from "@mui/icons-material/Logout.js";
+import Login from "@mui/icons-material/Login.js";
+import Face from "@mui/icons-material/Face.js";
 import ShoppingBasket from "@mui/icons-material/ShoppingBasket";
-import LineStyle from "@mui/icons-material/LineStyle";
-import Error from "@mui/icons-material/Error";
 
 // core components
-import CustomDropdown from "/components/CustomDropdown/CustomDropdown.js";
 import Button from "/components/CustomButtons/Button.js";
 
-import styles from "/styles/jss/nextjs-material-kit-pro/components/headerLinksStyle.js";
+//firebase auth
+import { useAuthContext } from "../../context/authContext.js";
 
+import styles from "/styles/jss/nextjs-material-kit-pro/components/headerLinksStyle.js";
+import { useRouter } from "next/router";
+import { signOutFirebase } from "../../firebaseConexion/signout.js";
+import { Tooltip } from "@mui/material";
+import { carritoExist, crearCarrito } from "../../firebaseConexion/carrito.js";
+import {
+  comprasExist,
+  crearTicketCompra,
+} from "../../firebaseConexion/ticketCompra.js";
 const useStyles = makeStyles(styles);
 
-export default function HeaderLinks(props) {
+export default function HeaderLinks() {
+  const router = useRouter();
+  const { user, cart } = useAuthContext();
+
   const easeInOutQuad = (t, b, c, d) => {
     t /= d / 2;
     if (t < 1) return (c / 2) * t * t + b;
@@ -54,267 +41,151 @@ export default function HeaderLinks(props) {
     return (-c / 2) * (t * (t - 2) - 1) + b;
   };
 
-  const smoothScroll = (e, target) => {
-    if (window.location.pathname === "/sections") {
-      var isMobile = navigator.userAgent.match(
-        /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
-      );
-      if (isMobile) {
-        // if we are on mobile device the scroll into view will be managed by the browser
-      } else {
-        e.preventDefault();
-        var targetScroll = document.getElementById(target);
-        scrollGo(document.documentElement, targetScroll.offsetTop, 1250);
-      }
-    }
+  const navegar = (ruta) => {
+    router.push(ruta);
   };
-  const scrollGo = (element, to, duration) => {
-    var start = element.scrollTop,
-      change = to - start,
-      currentTime = 0,
-      increment = 20;
-
-    var animateScroll = function () {
-      currentTime += increment;
-      var val = easeInOutQuad(currentTime, start, change, duration);
-      element.scrollTop = val;
-      if (currentTime < duration) {
-        setTimeout(animateScroll, increment);
-      }
-    };
-    animateScroll();
-  };
-  var onClickSections = {};
-
-  const { dropdownHoverColor } = props;
   const classes = useStyles();
+
+  const signOut = () => {
+    signOutFirebase();
+  };
+  useEffect(() => {
+    if (user) {
+      //crear carrito si no existe
+      carritoExist(user.uid)
+        .then((exist) => {
+          if (!exist) {
+            crearCarrito(user.uid);
+          }
+        })
+        .catch((err) => {
+          console.log("something went wrong", err);
+        });
+      //crear orden de compra si no existe
+      comprasExist(user.uid)
+        .then((exist) => {
+          if (!exist) {
+            crearTicketCompra(user.uid);
+          }
+        })
+        .catch((err) => {
+          console.log("something went wrong", err);
+        });
+    }
+  }, []);
   return (
-    <List className={classes.list + " " + classes.mlAuto}>
-      <ListItem className={classes.listItem}>
-        <CustomDropdown
-          noLiPadding
-          navDropdown
-          hoverColor={dropdownHoverColor}
-          buttonText="Components"
-          buttonProps={{
-            className: classes.navLink,
-            color: "transparent"
-          }}
-          buttonIcon={Apps}
-          dropdownList={[
-            <Link href="/presentation">
-              <a className={classes.dropdownLink}>
-                <LineStyle className={classes.dropdownIcons} /> Presentation
-                Page
-              </a>
-            </Link>,
-            <Link href="/components">
-              <a className={classes.dropdownLink}>
-                <Layers className={classes.dropdownIcons} />
-                All components
-              </a>
-            </Link>,
-            <a
-              href="https://demos.creative-tim.com/nextjs-material-kit-pro/documentation/tutorial?ref=njsmkp-navbar"
-              target="_blank"
-              className={classes.dropdownLink}
+    <div className={classes.collapse}>
+      <List className={classes.list + " " + classes.mlAuto}>
+        <ListItem className={classes.listItem}>
+          <Button
+            className={classes.navLink}
+            onClick={() => navegar("home")}
+            color='transparent'
+          >
+            Home
+          </Button>
+        </ListItem>
+        <ListItem className={classes.listItem}>
+          <Button
+            className={classes.navLink}
+            onClick={(e) => e.preventDefault()}
+            color='transparent'
+          >
+            About us
+          </Button>
+        </ListItem>
+        <ListItem className={classes.listItem}>
+          <Button
+            className={classes.navLink}
+            onClick={(e) => e.preventDefault()}
+            color='transparent'
+          >
+            Products
+          </Button>
+        </ListItem>
+        <ListItem className={classes.listItem}>
+          <Button
+            className={classes.navLink}
+            onClick={(e) => e.preventDefault()}
+            color='transparent'
+          >
+            Contact us
+          </Button>
+        </ListItem>
+      </List>
+      <List className={classes.list + " " + classes.mlAuto}>
+        <ListItem className={classes.listItem}>
+          <Tooltip
+            id='tooltip-perfil'
+            title='perfil'
+            placement='top'
+            classes={{ tooltip: classes.tooltip }}
+            onClick={() => navegar("perfil")}
+          >
+            <Button
+              color='transparent'
+              className={classes.navLink + " " + classes.navLinkJustIcon}
             >
-              <Icon className={classes.dropdownIcons}>content_paste</Icon>
-              Documentation
-            </a>
-          ]}
-        />
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <CustomDropdown
-          noLiPadding
-          navDropdown
-          hoverColor={dropdownHoverColor}
-          buttonText="Sections"
-          buttonProps={{
-            className: classes.navLink,
-            color: "transparent"
-          }}
-          buttonIcon={ViewDay}
-          dropdownList={[
-            <Link href="/sections#headers">
-              <a
-                className={classes.dropdownLink}
-                onClick={(e) => smoothScroll(e, "headers")}
-              >
-                <Dns className={classes.dropdownIcons} /> Headers
-              </a>
-            </Link>,
-            <Link href="/sections#features">
-              <a
-                className={classes.dropdownLink}
-                onClick={(e) => smoothScroll(e, "features")}
-              >
-                <Build className={classes.dropdownIcons} /> Features
-              </a>
-            </Link>,
-            <Link href="/sections#blogs">
-              <a
-                className={classes.dropdownLink}
-                onClick={(e) => smoothScroll(e, "blogs")}
-              >
-                <ListIcon className={classes.dropdownIcons} /> Blogs
-              </a>
-            </Link>,
-            <Link href="/sections#teams">
-              <a
-                className={classes.dropdownLink}
-                onClick={(e) => smoothScroll(e, "teams")}
-              >
-                <People className={classes.dropdownIcons} /> Teams
-              </a>
-            </Link>,
-            <Link href="/sections#projects">
-              <a
-                className={classes.dropdownLink}
-                onClick={(e) => smoothScroll(e, "projects")}
-              >
-                <Assignment className={classes.dropdownIcons} /> Projects
-              </a>
-            </Link>,
-            <Link href="/sections#pricing">
-              <a
-                className={classes.dropdownLink}
-                onClick={(e) => smoothScroll(e, "pricing")}
-              >
-                <MonetizationOn className={classes.dropdownIcons} /> Pricing
-              </a>
-            </Link>,
-            <Link href="/sections#testimonials">
-              <a
-                className={classes.dropdownLink}
-                onClick={(e) => smoothScroll(e, "testimonials")}
-              >
-                <Chat className={classes.dropdownIcons} /> Testimonials
-              </a>
-            </Link>,
-            <Link href="/sections#contacts">
-              <a
-                className={classes.dropdownLink}
-                onClick={(e) => smoothScroll(e, "contacts")}
-              >
-                <Call className={classes.dropdownIcons} /> Contacts
-              </a>
-            </Link>
-          ]}
-        />
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <CustomDropdown
-          noLiPadding
-          navDropdown
-          hoverColor={dropdownHoverColor}
-          buttonText="Examples"
-          buttonProps={{
-            className: classes.navLink,
-            color: "transparent"
-          }}
-          buttonIcon={ViewCarousel}
-          dropdownList={[
-            <Link href="/about-us">
-              <a className={classes.dropdownLink}>
-                <AccountBalance className={classes.dropdownIcons} /> About Us
-              </a>
-            </Link>,
-            <Link href="/blog-post">
-              <a className={classes.dropdownLink}>
-                <ArtTrack className={classes.dropdownIcons} /> Blog Post
-              </a>
-            </Link>,
-            <Link href="/blog-posts">
-              <a className={classes.dropdownLink}>
-                <ViewQuilt className={classes.dropdownIcons} /> Blog Posts
-              </a>
-            </Link>,
-            <Link href="/contact-us">
-              <a className={classes.dropdownLink}>
-                <LocationOn className={classes.dropdownIcons} /> Contact Us
-              </a>
-            </Link>,
-            <Link href="/landing-page">
-              <a className={classes.dropdownLink}>
-                <ViewDay className={classes.dropdownIcons} /> Landing Page
-              </a>
-            </Link>,
-            <Link href="/login">
-              <a className={classes.dropdownLink}>
-                <Fingerprint className={classes.dropdownIcons} /> Login Page
-              </a>
-            </Link>,
-            <Link href="/pricing">
-              <a className={classes.dropdownLink}>
-                <AttachMoney className={classes.dropdownIcons} /> Pricing Page
-              </a>
-            </Link>,
-            <Link href="/shopping-cart">
-              <a className={classes.dropdownLink}>
-                <ShoppingBasket className={classes.dropdownIcons} /> Shopping
-                Cart
-              </a>
-            </Link>,
-            <Link href="/ecommerce">
-              <a className={classes.dropdownLink}>
-                <Store className={classes.dropdownIcons} /> Ecommerce Page
-              </a>
-            </Link>,
-            <Link href="/product">
-              <a className={classes.dropdownLink}>
-                <ShoppingCart className={classes.dropdownIcons} /> Product Page
-              </a>
-            </Link>,
-            <Link href="/profile">
-              <a className={classes.dropdownLink}>
-                <AccountCircle className={classes.dropdownIcons} /> Profile Page
-              </a>
-            </Link>,
-            <Link href="/signup">
-              <a className={classes.dropdownLink}>
-                <PersonAdd className={classes.dropdownIcons} /> Signup Page
-              </a>
-            </Link>,
-            <Link href="/error-page">
-              <a className={classes.dropdownLink}>
-                <Error className={classes.dropdownIcons} /> Error Page
-              </a>
-            </Link>
-          ]}
-        />
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <Hidden lgDown>
-          <Button
-            href="https://www.creative-tim.com/product/nextjs-material-kit-pro?ref=njsmkp-navbar"
-            color={"white"}
-            target="_blank"
-            className={classes.navButton}
-            round
+              <Face />
+            </Button>
+          </Tooltip>
+        </ListItem>
+        <ListItem className={classes.listItem}>
+          <Tooltip
+            id='tooltip-carrito'
+            title='carrito'
+            placement='top'
+            classes={{ tooltip: classes.tooltip }}
           >
-            <ShoppingCart className={classes.icons} /> buy now
-          </Button>
-        </Hidden>
-        <Hidden mdUp>
-          <Button
-            href="https://www.creative-tim.com/product/nextjs-material-kit-pro?ref=njsmkp-navbar"
-            color={"info"}
-            target="_blank"
-            className={classes.navButton}
-            round
+            <Button
+              color='transparent'
+              justIcon
+              className={classes.navLink + " " + classes.navLinkJustIcon}
+              onClick={() => navegar("carrito")}
+            >
+              <ShoppingBasket />
+              <div
+                style={{
+                  fontSize: "12px",
+                  color: "#fff",
+                  background: "red",
+                  borderRadius: "50%",
+                  padding: "0 5px",
+                  position: "relative",
+                  left: "-8px",
+                  top: "-10px",
+                  opacity: "0.9",
+                }}
+              >
+                {cart && cart.totalProductos > 0 ? cart.totalProductos : ""}
+              </div>
+            </Button>
+          </Tooltip>
+        </ListItem>
+        <ListItem className={classes.listItem}>
+          <Tooltip
+            id='tooltip-loginOut'
+            title={user ? "deslogearse" : "iniciar sesion"}
+            placement='top'
+            classes={{ tooltip: classes.tooltip }}
           >
-            <ShoppingCart className={classes.icons} /> buy now
-          </Button>
-        </Hidden>
-      </ListItem>
-    </List>
+            <Button
+              color='transparent'
+              justIcon
+              onClick={() => (user ? signOut() : navegar("inicioSesion"))}
+              className={classes.navLink + " " + classes.navLinkJustIcon}
+            >
+              {user ? <LogOut /> : <Login />}
+            </Button>
+          </Tooltip>
+        </ListItem>
+      </List>
+    </div>
   );
 }
 
 HeaderLinks.defaultProps = {
-  hoverColor: "primary"
+  hoverColor: "primary",
 };
 
 HeaderLinks.propTypes = {
@@ -325,6 +196,6 @@ HeaderLinks.propTypes = {
     "success",
     "warning",
     "danger",
-    "rose"
-  ])
+    "rose",
+  ]),
 };
