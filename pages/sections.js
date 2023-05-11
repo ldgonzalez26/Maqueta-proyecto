@@ -1,5 +1,5 @@
 import React from "react";
-import makeStyles from '@mui/styles/makeStyles';
+import makeStyles from "@mui/styles/makeStyles";
 // @mui/icons-material
 // core components
 import Header from "/components/Header/Header.js";
@@ -85,28 +85,28 @@ export default function SectionsPage() {
   return (
     <div>
       <Header
-        color="info"
-        brand="NextJS Material Kit PRO"
-        links={<HeaderLinks dropdownHoverColor="info" />}
+        color='info'
+        brand='NextJS Material Kit PRO'
+        links={<HeaderLinks dropdownHoverColor='info' />}
         fixed
       />
       <div className={classes.main}>
-        <SectionHeaders id="headers" />
-        <SectionFeatures id="features" />
-        <SectionBlogs id="blogs" />
-        <SectionTeams id="teams" />
-        <SectionProjects id="projects" />
-        <SectionPricing id="pricing" />
-        <SectionTestimonials id="testimonials" />
-        <SectionContacts id="contacts" />
+        <SectionHeaders id='headers' />
+        <SectionFeatures id='features' />
+        <SectionBlogs id='blogs' />
+        <SectionTeams id='teams' />
+        <SectionProjects id='projects' />
+        <SectionPricing id='pricing' />
+        <SectionTestimonials id='testimonials' />
+        {/** <SectionContacts id="contacts" />*/}
       </div>
-      <nav id="cd-vertical-nav">
+      <nav id='cd-vertical-nav'>
         <ul>
           <li>
             <a
-              href="#headers"
-              data-number="1"
-              className="is-selected"
+              href='#headers'
+              data-number='1'
+              className='is-selected'
               onClick={(e) => {
                 var isMobile = navigator.userAgent.match(
                   /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
@@ -119,15 +119,15 @@ export default function SectionsPage() {
                 }
               }}
             >
-              <span className="cd-dot" />
-              <span className="cd-label">Headers</span>
+              <span className='cd-dot' />
+              <span className='cd-label'>Headers</span>
             </a>
           </li>
           <li>
             <a
-              href="#features"
-              data-number="2"
-              className=""
+              href='#features'
+              data-number='2'
+              className=''
               onClick={(e) => {
                 var isMobile = navigator.userAgent.match(
                   /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
@@ -140,15 +140,15 @@ export default function SectionsPage() {
                 }
               }}
             >
-              <span className="cd-dot" />
-              <span className="cd-label">Features</span>
+              <span className='cd-dot' />
+              <span className='cd-label'>Features</span>
             </a>
           </li>
           <li>
             <a
-              href="#blogs"
-              data-number="3"
-              className=""
+              href='#blogs'
+              data-number='3'
+              className=''
               onClick={(e) => {
                 var isMobile = navigator.userAgent.match(
                   /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
@@ -161,15 +161,15 @@ export default function SectionsPage() {
                 }
               }}
             >
-              <span className="cd-dot" />
-              <span className="cd-label">Blogs</span>
+              <span className='cd-dot' />
+              <span className='cd-label'>Blogs</span>
             </a>
           </li>
           <li>
             <a
-              href="#teams"
-              data-number="4"
-              className=""
+              href='#teams'
+              data-number='4'
+              className=''
               onClick={(e) => {
                 var isMobile = navigator.userAgent.match(
                   /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
@@ -182,15 +182,15 @@ export default function SectionsPage() {
                 }
               }}
             >
-              <span className="cd-dot" />
-              <span className="cd-label">Teams</span>
+              <span className='cd-dot' />
+              <span className='cd-label'>Teams</span>
             </a>
           </li>
           <li>
             <a
-              href="#projects"
-              data-number="5"
-              className=""
+              href='#projects'
+              data-number='5'
+              className=''
               onClick={(e) => {
                 var isMobile = navigator.userAgent.match(
                   /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
@@ -203,15 +203,15 @@ export default function SectionsPage() {
                 }
               }}
             >
-              <span className="cd-dot" />
-              <span className="cd-label">Projects</span>
+              <span className='cd-dot' />
+              <span className='cd-label'>Projects</span>
             </a>
           </li>
           <li>
             <a
-              href="#pricing"
-              data-number="6"
-              className=""
+              href='#pricing'
+              data-number='6'
+              className=''
               onClick={(e) => {
                 var isMobile = navigator.userAgent.match(
                   /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
@@ -224,15 +224,15 @@ export default function SectionsPage() {
                 }
               }}
             >
-              <span className="cd-dot" />
-              <span className="cd-label">Pricing</span>
+              <span className='cd-dot' />
+              <span className='cd-label'>Pricing</span>
             </a>
           </li>
           <li>
             <a
-              href="#testimonials"
-              data-number="7"
-              className=""
+              href='#testimonials'
+              data-number='7'
+              className=''
               onClick={(e) => {
                 var isMobile = navigator.userAgent.match(
                   /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
@@ -245,15 +245,15 @@ export default function SectionsPage() {
                 }
               }}
             >
-              <span className="cd-dot" />
-              <span className="cd-label">Testimonials</span>
+              <span className='cd-dot' />
+              <span className='cd-label'>Testimonials</span>
             </a>
           </li>
           <li>
             <a
-              href="#contacts"
-              data-number="8"
-              className=""
+              href='#contacts'
+              data-number='8'
+              className=''
               onClick={(e) => {
                 var isMobile = navigator.userAgent.match(
                   /(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i
@@ -266,8 +266,8 @@ export default function SectionsPage() {
                 }
               }}
             >
-              <span className="cd-dot" />
-              <span className="cd-label">Contact Us</span>
+              <span className='cd-dot' />
+              <span className='cd-label'>Contact Us</span>
             </a>
           </li>
         </ul>

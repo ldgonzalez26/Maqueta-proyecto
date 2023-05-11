@@ -2,9 +2,7 @@
 import React, { useState, useContext } from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
-import makeStyles from '@mui/styles/makeStyles';
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
+import makeStyles from "@mui/styles/makeStyles";
 import InputAdornment from "@mui/material/InputAdornment";
 // @material-ui icons
 import Mail from "@mui/icons-material/Mail";
@@ -21,74 +19,32 @@ import CustomInput from "/components/CustomInput/CustomInput.js";
 import Footer from "/components/Footer/Footer.js";
 // sections for this page
 
-import SectionLatestOffers from "/pages-sections/ecommerce/SectionLatestOffers.js";
-import SectionPlans from "../componentesPropios/SectionPlans.js"
-import SectionProducts from "/pages-sections/ecommerce/SectionProducts.js";
-import SectionBlog from "/pages-sections/ecommerce/SectionBlog.js";
+import SectionPlans from "../componentesPropios/SectionPlans.js";
 
 import styles from "/styles/jss/nextjs-material-kit-pro/pages/ecommerceStyle.js";
 
 //Propio
-import FooterGlobal from "../componentesPropios/FooterGlobal"
-import { db, query, collection, doc, addDoc, setDoc, getDocs } from "../firebaseConexion/firebaseConfig.js"
-import {signOutFirebase} from "../firebaseConexion/signout"
-import {useAuthContext} from "../context/authContext.js"
-import { Plan } from "../clasesTS/Plan.ts";
+import FooterGlobal from "../componentesPropios/FooterGlobal";
+import { getPlanes } from "../firebaseConexion/productos.js";
 
 const useStyles = makeStyles(styles);
 
 export default function CatalogoPage() {
-
-  const {user} = useAuthContext()
   /* console.log(user) */
 
-  const [planes, setPlanes] = useState([])
+  const [planes, setPlanes] = useState([]);
 
   const [simpleSelect, setSimpleSelect] = useState("");
 
   React.useEffect(() => {
-    //window.scrollTo(0, 0);
-    //document.body.scrollTop = 0;
-    getPlanes();
-  }, []);
-
-  const handleSimple = (event) => {
-    setSimpleSelect(event.target.value);
-  };
-
-  const nuevoDoc = async () => {
-
-
-    try {
-      const docRef = await addDoc(collection(db, "users"), {
-        name: "Tokyo",
-        country: "Japan"
+    getPlanes()
+      .then((result) => {
+        setPlanes(result);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      console.log("Document written with ID: ", docRef.id);
-      console.log(docRef)
-    } catch (e) {
-      console.error("Error adding document: ", e);
-    }
-
-  }
-
-  const getPlanes = async () => {
-    const querySnapshot = await getDocs(query(collection(db, 'Planes')))
-    let arregloPlanes = []
-    querySnapshot.forEach((doc) => {
-      let id = doc.id
-      let { Categoria, Descripcion, Duracion, Nombre, Precio, Tipo } = doc.data()
-      let plan = new Plan(Nombre, Tipo, Categoria, Duracion, Precio, Descripcion)
-      arregloPlanes.push(plan)
-    })
-    setPlanes(arregloPlanes)
-  }
-
-  const consultar = () => {
-    console.log(planes)
-    console.log(user)
-    signOutFirebase()
-  }
+  }, []);
 
   const classes = useStyles();
 
@@ -104,7 +60,7 @@ export default function CatalogoPage() {
           color: "info"
         }}
       /> */}
-      <Parallax image="/img/examples/clark-street-merc.jpg" filter="dark" small>
+      <Parallax image='/img/examples/clark-street-merc.jpg' filter='dark' small>
         <div className={classes.container}>
           <GridContainer>
             <GridItem
@@ -129,7 +85,6 @@ export default function CatalogoPage() {
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <button onClick={() => consultar()}>Nuevo</button>
         <SectionPlans planes={planes} />
       </div>
 
@@ -161,25 +116,24 @@ export default function CatalogoPage() {
                     <GridContainer>
                       <GridItem xs={12} sm={6} md={6} lg={8}>
                         <CustomInput
-                          id="emailPreFooter"
+                          id='emailPreFooter'
                           formControlProps={{
                             fullWidth: true,
-                            className: classes.cardForm
+                            className: classes.cardForm,
                           }}
                           inputProps={{
                             startAdornment: (
-                              <InputAdornment position="start">
+                              <InputAdornment position='start'>
                                 <Mail />
                               </InputAdornment>
                             ),
-                            placeholder: "Your Email..."
+                            placeholder: "Your Email...",
                           }}
                         />
                       </GridItem>
                       <GridItem xs={12} sm={6} md={6} lg={4}>
-                      
                         <Button
-                          color="rose"
+                          color='rose'
                           block
                           className={classes.subscribeButton}
                         >
