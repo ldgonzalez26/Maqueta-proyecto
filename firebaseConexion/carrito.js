@@ -53,6 +53,12 @@ export const agregarAlCarrito = async (userId, producto) => {
   });
 };
 
+export const quitarDelCarrito = async (userId, producto) => {
+
+  
+
+};
+
 export const getProductosEnCarrito = async (userId) => {
   const docRef = await getDoc(doc(db, "carrito", userId));
   const data = docRef.data();

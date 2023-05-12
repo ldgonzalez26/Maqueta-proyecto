@@ -38,12 +38,13 @@ import { useAuthContext } from "../context/authContext.js";
 
 //firebase
 import { agregarCompra } from "../firebaseConexion/tickets.js";
+import { limpiarCarrito } from "../firebaseConexion/carrito.js";
+import { agregarAlCarrito as addProducto } from "../firebaseConexion/carrito";
 
 //styles
 import shoppingCartStyle from "/styles/jss/nextjs-material-kit-pro/pages/shoppingCartStyle.js";
 import ModalStyle from "/styles/jss/nextjs-material-kit-pro/pages/componentsSections/javascriptStyles.js";
 import selectStyle from "/styles/jss/nextjs-material-kit-pro/pages/componentsSections/basicsStyle.js";
-import { limpiarCarrito } from "../firebaseConexion/carrito.js";
 
 const useStyles = makeStyles(shoppingCartStyle);
 const useStylesDialog = makeStyles(ModalStyle);
@@ -101,7 +102,7 @@ export default function Carrito() {
             placement='top'
             classes={{ tooltip: classes.tooltip }}
           >
-            <Button link className={classes.actionButton}>
+            <Button onClick={() => agregarAlCarrito(producto)} link className={classes.actionButton}>
               <Add />
             </Button>
           </Tooltip>,
@@ -112,7 +113,7 @@ export default function Carrito() {
             placement='top'
             classes={{ tooltip: classes.tooltip }}
           >
-            <Button link className={classes.actionButton}>
+            <Button onClick={() => console.log("remover", producto)} link className={classes.actionButton}>
               <Remove />
             </Button>
           </Tooltip>,
@@ -188,6 +189,15 @@ export default function Carrito() {
         console.log("something went wrong", err);
       });
   };
+
+  const agregarAlCarrito = (producto) =>{
+    addProducto(user.uid, producto).then(res =>{
+      console.log("añadiendo al carrito: ", res)
+    }).catch(error =>{
+      console.log("Error añadiendo al carrito ", error)
+    })
+  }
+
   return (
     <div>
       <Dialog
