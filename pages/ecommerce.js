@@ -36,16 +36,7 @@ export default function EcommercePage() {
   const classes = useStyles();
   return (
     <div>
-      <Header
-        brand="NextJS Material Kit PRO"
-        links={<HeaderLinks dropdownHoverColor="info" />}
-        fixed
-        color="transparent"
-        changeColorOnScroll={{
-          height: 300,
-          color: "info"
-        }}
-      />
+      
       <Parallax image="/img/examples/clark-street-merc.jpg" filter="dark" small>
         <div className={classes.container}>
           <GridContainer>
@@ -59,11 +50,8 @@ export default function EcommercePage() {
               )}
             >
               <div className={classes.brand}>
-                <h1 className={classes.title}>Ecommerce Page!</h1>
-                <h4>
-                  Free global delivery for all products. Use coupon{" "}
-                  <b>25summer</b> for an extra 25% Off
-                </h4>
+                <h1 className={classes.title}>Tickets/Soporte</h1>
+                
               </div>
             </GridItem>
           </GridContainer>

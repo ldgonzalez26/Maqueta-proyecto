@@ -26,8 +26,8 @@ import { Tooltip } from "@mui/material";
 import { carritoExist, crearCarrito } from "../../firebaseConexion/carrito.js";
 import {
   comprasExist,
-  crearTicketCompra,
-} from "../../firebaseConexion/ticketCompra.js";
+  crearTickets,
+} from "../../firebaseConexion/tickets.js";
 const useStyles = makeStyles(styles);
 
 export default function HeaderLinks() {
@@ -51,6 +51,7 @@ export default function HeaderLinks() {
   };
   useEffect(() => {
     if (user) {
+      console.log(user,"Identificacion")
       //crear carrito si no existe
       carritoExist(user.uid)
         .then((exist) => {
@@ -65,7 +66,8 @@ export default function HeaderLinks() {
       comprasExist(user.uid)
         .then((exist) => {
           if (!exist) {
-            crearTicketCompra(user.uid);
+            crearTickets(user.uid);
+            console.log("LLEGASTE")
           }
         })
         .catch((err) => {
@@ -82,13 +84,14 @@ export default function HeaderLinks() {
             onClick={() => navegar("catalogo")}
             color='transparent'
           >
-            Inicio
+            catalogo
           </Button>
         </ListItem>
         <ListItem className={classes.listItem}>
           <Button
             className={classes.navLink}
-            onClick={(e) => e.preventDefault()}
+            
+            onClick={() => navegar("tickets")}
             color='transparent'
           >
             Tickets

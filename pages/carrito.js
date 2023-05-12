@@ -37,7 +37,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { useAuthContext } from "../context/authContext.js";
 
 //firebase
-import { agregarCompra } from "../firebaseConexion/ticketCompra.js";
+import { agregarCompra } from "../firebaseConexion/tickets.js";
 
 //styles
 import shoppingCartStyle from "/styles/jss/nextjs-material-kit-pro/pages/shoppingCartStyle.js";
@@ -57,6 +57,7 @@ export default function Carrito() {
   const { user, cart } = useAuthContext();
   const [tableData, setTableData] = useState([]);
   const [loginModal, setLoginModal] = useState(false);
+  const [desabilitar, setDesabilitar] = useState(false);
 
   //text for modal
   const [nombre, setNombre] = useState("");
@@ -168,6 +169,9 @@ export default function Carrito() {
     setDescripcion("");
   };
   const generarOrden = () => {
+    setLoginModal(false);
+    limpiarCampos();
+
     const compra = {
       nombre,
       codigo,
@@ -179,8 +183,6 @@ export default function Carrito() {
     agregarCompra(user.uid, compra)
       .then(() => {
         limpiarCarrito(user.uid);
-        setLoginModal(false);
-        limpiarCampos();
       })
       .catch((err) => {
         console.log("something went wrong", err);
@@ -309,9 +311,9 @@ export default function Carrito() {
                         root: classesSelect.selectMenuItem,
                         selected: classesSelect.selectMenuItemSelected,
                       }}
-                      value='pago-mobil'
+                      value='pago-movil'
                     >
-                      pago mobil
+                      pago movil
                     </MenuItem>
                     <MenuItem
                       classes={{
@@ -357,7 +359,7 @@ export default function Carrito() {
               classesDialog.justifyContentCenter
             }
           >
-            <Button onClick={() => generarOrden()} color='primary' size='lg'>
+            <Button onClick={() => generarOrden()} color='primary' size='lg' disabled={desabilitar}>
               Generar orden
             </Button>
           </DialogActions>
