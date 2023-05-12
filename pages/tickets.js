@@ -91,7 +91,7 @@ export default function ShoppingCartPage() {
             <Tooltip
                      
                       id="add-ticket"
-                      title="Nueva solicitud"
+                      title="Nueva solicitudh"
                       placement="top"
                       classes={{ tooltip: classes.tooltip }}
                     >
