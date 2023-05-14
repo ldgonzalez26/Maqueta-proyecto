@@ -109,13 +109,14 @@ export default function HeaderLinks() {
         
       </List>
       <List className={classes.list + " " + classes.mlAuto}>
+      {user &&(  
         <ListItem className={classes.listItem}>
           <Tooltip
             id='tooltip-perfil'
             title='perfil'
             placement='top'
             classes={{ tooltip: classes.tooltip }}
-            onClick={() => navegar("perfil")}
+            onClick={() => navegar("profile")}
           >
             <Button
               color='transparent'
@@ -125,7 +126,12 @@ export default function HeaderLinks() {
             </Button>
           </Tooltip>
         </ListItem>
+      )}
+
+        {user &&( 
+
         <ListItem className={classes.listItem}>
+        
           <Tooltip
             id='tooltip-carrito'
             title='carrito'
@@ -157,7 +163,10 @@ export default function HeaderLinks() {
             </Button>
           </Tooltip>
         </ListItem>
+         )}
         <ListItem className={classes.listItem}>
+          
+    
           <Tooltip
             id='tooltip-loginOut'
             title={user ? "deslogearse" : "iniciar sesion"}
@@ -174,6 +183,7 @@ export default function HeaderLinks() {
             </Button>
           </Tooltip>
         </ListItem>
+       
       </List>
     </div>
   );
