@@ -40,11 +40,11 @@ export const agregarSoporte = async (userId, soporte) => {
   const docRef = await getDoc(doc(db, "tickets", userId));
   const data = docRef.data();
   let soportes = data.soportes;
-  compra.status = "En proceso";
-  let totalSoporte = data.totalSoportes ? data.totalSoportes : 0;
-  compras.push(compra);
+  soporte.status = "En proceso";
+  let totalSoportes = data.totalSoportes ? data.totalSoportes : 0;
+  soportes.push(soporte);
 
-  await updateDoc(doc(db, "ticketsCompra", userId), {
+  await updateDoc(doc(db, "tickets", userId), {
     id: userId,
     soportes: soportes,
     totalSoportes: totalSoportes + 1,
