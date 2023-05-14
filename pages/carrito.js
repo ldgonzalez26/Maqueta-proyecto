@@ -39,7 +39,7 @@ import { useAuthContext } from "../context/authContext.js";
 //firebase
 import { agregarCompra } from "../firebaseConexion/tickets.js";
 import { limpiarCarrito } from "../firebaseConexion/carrito.js";
-import { agregarAlCarrito as addProducto } from "../firebaseConexion/carrito";
+import { agregarAlCarrito as addProducto, quitarDelCarrito as removeProducto } from "../firebaseConexion/carrito";
 
 //styles
 import shoppingCartStyle from "/styles/jss/nextjs-material-kit-pro/pages/shoppingCartStyle.js";
@@ -113,7 +113,7 @@ export default function Carrito() {
             placement='top'
             classes={{ tooltip: classes.tooltip }}
           >
-            <Button onClick={() => console.log("remover", producto)} link className={classes.actionButton}>
+            <Button onClick={() => quitarDelCarrito(producto)} link className={classes.actionButton}>
               <Remove />
             </Button>
           </Tooltip>,
@@ -195,6 +195,14 @@ export default function Carrito() {
       console.log("añadiendo al carrito: ", res)
     }).catch(error =>{
       console.log("Error añadiendo al carrito ", error)
+    })
+  }
+
+  const quitarDelCarrito = (producto) =>{
+    removeProducto(user.uid, producto).then(res =>{
+      console.log("Quitando al carrito: ", res)
+    }).catch(error =>{
+      console.log("Quitando añadiendo al carrito ", error)
     })
   }
 
