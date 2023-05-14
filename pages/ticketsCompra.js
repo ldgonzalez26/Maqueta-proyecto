@@ -32,7 +32,7 @@ import { useAuthContext } from "../context/authContext.js";
 
 const useStyles = makeStyles(shoppingCartStyle);
 
-export default function tickets() {
+export default function ticketsCompra() {
   const router = useRouter();
   const { user, cart } = useAuthContext();
   const [tableDataSoporte, setTableDataSoporte] = useState([])
@@ -47,34 +47,44 @@ export default function tickets() {
       getTickets(user.uid).then((res) => {
 
         let arreglo = []
-        res.soportes.map((soporte, index) => {
+        res.compras.map((compra, index) => {
           arreglo.push(
             [
-              <span key={"ticket-titulo-" + index}>
+              <span key={"compra-nombre-" + index}>
                 <a>
-                  {soporte.titulo}
+                  {compra.nombre}
                 </a>
               </span>,
-              <span key={"ticket-descripcion-" + index}>
+              <span key={"compra-codigo-" + index}>
                 <a>
-                  {soporte.descripcion}
+                  {compra.codigo}
                 </a>
               </span>,
-              <span key={"ticket-fecha-" + index}>
+              <span key={"compra-fecha-" + index}>
                 <a>
-                  {soporte.fechaActualizacion}
+                  {compra.fechaActualizacion}
                 </a>
               </span>,
-              <span key={"ticket-soporte-" + index}>
+              <span key={"compra-metodo-" + index}>
                 <a>
-                  {soporte.status}
+                  {compra.metodo}
+                </a>
+              </span>,
+              <span key={"compra-monto-" + index}>
+                <a>
+                  {compra.monto}
+                </a>
+              </span>,
+              <span key={"compra-estado-" + index}>
+                <a>
+                  {compra.status}
                 </a>
               </span>
             ]
           )
         })
 
-        setTableDataSoporte(arreglo)
+        setTableDataCompra(arreglo)
 
       })
     } else {
@@ -87,10 +97,12 @@ export default function tickets() {
 
   }, []);
 
-  const goToCrearTicket = () =>{
-    router.push("crearTicket");
-  }
   const classes = useStyles();
+
+  const goToCatalogo = () => {
+    router.push("catalogo");
+  };
+
   return (
     <div>
 
@@ -107,7 +119,7 @@ export default function tickets() {
                 classes.textCenter
               )}
             >
-              <h2 className={classes.title}>Pagina de soporte</h2>
+              <h2 className={classes.title}>Tus Compras</h2>
             </GridItem>
           </GridContainer>
         </div>
@@ -119,26 +131,27 @@ export default function tickets() {
             <CardBody plain>
 
               <div style={{ display: 'flex', marginBottom: "3rem" }}>
-                <h3 style={{ display: 'inline-block' }} className={classes.cardTitle}>Tickets de soporte</h3>
+                <h3 style={{ display: 'inline-block' }} className={classes.cardTitle}>Órdenes de Compra</h3>
                 <Tooltip
                   id="add-ticket"
-                  title="Nueva solicitud"
+                  title="Explorar catalogo de productos"
                   placement="top"
                   classes={{ tooltip: classes.tooltip }}
                 >
-                  <Button onClick={goToCrearTicket} style={{ marginLeft: 'auto' }} justIcon round color="primary"><Add style={{ color: "#FFFFFF" }} />
+                  <Button onClick={goToCatalogo} style={{ marginLeft: 'auto' }} justIcon round color="primary"><Add style={{ color: "#FFFFFF" }} />
                   </Button>
                 </Tooltip>
               </div>
-
               <Table
                 tableHead={[
-                  "Titulo",
-                  "Descripción",
+                  "Nombre",
+                  "Codigo Ref.",
                   "Ultima Actualizacion",
+                  "Método",
+                  "Monto",
                   "Estado"
                 ]}
-                tableData={tableDataSoporte}
+                tableData={tableDataCompra}
                 tableShopping
                 customHeadCellClasses={[
                   classes.textCenter,

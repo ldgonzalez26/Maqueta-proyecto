@@ -100,6 +100,16 @@ export default function HeaderLinks() {
         <ListItem className={classes.listItem}>
           <Button
             className={classes.navLink}
+            
+            onClick={() => navegar("ticketsCompra")}
+            color='transparent'
+          >
+            Compras
+          </Button>
+        </ListItem>
+        <ListItem className={classes.listItem}>
+          <Button
+            className={classes.navLink}
             onClick={(e) => e.preventDefault()}
             color='transparent'
           >

@@ -178,6 +178,7 @@ export default function Carrito() {
       codigo,
       monto,
       fecha,
+      fechaActualizacion: fecha,
       metodo,
       descripcion,
     };
