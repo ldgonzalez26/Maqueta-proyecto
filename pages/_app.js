@@ -122,11 +122,7 @@ export default class MyApp extends App {
                   brand='Latinove'
                   links={<HeaderLinks dropdownHoverColor='danger' />}
                   fixed
-                  color='info'
-                  changeColorOnScroll={{
-                    height: 300,
-                    color: "danger",
-                  }}
+                  color='rose'
                 />
                 <Component {...pageProps} />
               </>
