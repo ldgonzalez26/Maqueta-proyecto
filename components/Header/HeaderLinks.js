@@ -11,6 +11,8 @@ import ListItem from "@mui/material/ListItem";
 import LogOut from "@mui/icons-material/Logout.js";
 import Login from "@mui/icons-material/Login.js";
 import Face from "@mui/icons-material/Face.js";
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import ShoppingBasket from "@mui/icons-material/ShoppingBasket";
 
 // core components
@@ -51,7 +53,7 @@ export default function HeaderLinks() {
   };
   useEffect(() => {
     if (user) {
-      console.log(user,"Identificacion")
+      console.log(user, "Identificacion")
       //crear carrito si no existe
       carritoExist(user.uid)
         .then((exist) => {
@@ -84,30 +86,30 @@ export default function HeaderLinks() {
             onClick={() => navegar("catalogo")}
             color='transparent'
           >
-            catalogo
+            Catalogo
           </Button>
         </ListItem>
         <ListItem className={classes.listItem}>
           <Button
             className={classes.navLink}
-            
+
             onClick={() => navegar("tickets")}
             color='transparent'
           >
-            Tickets
+            Soporte
           </Button>
         </ListItem>
         <ListItem className={classes.listItem}>
           <Button
             className={classes.navLink}
-            
+
             onClick={() => navegar("ticketsCompra")}
             color='transparent'
           >
-            Compras
+            Tus Compras
           </Button>
         </ListItem>
-        <ListItem className={classes.listItem}>
+        {/*         <ListItem className={classes.listItem}>
           <Button
             className={classes.navLink}
             onClick={(e) => e.preventDefault()}
@@ -115,71 +117,71 @@ export default function HeaderLinks() {
           >
             Conocenos
           </Button>
-        </ListItem>
-        
+        </ListItem> */}
+
       </List>
       <List className={classes.list + " " + classes.mlAuto}>
-      {user &&(  
-        <ListItem className={classes.listItem}>
-          <Tooltip
-            id='tooltip-perfil'
-            title='perfil'
-            placement='top'
-            classes={{ tooltip: classes.tooltip }}
-            onClick={() => navegar("profile")}
-          >
-            <Button
-              color='transparent'
-              className={classes.navLink + " " + classes.navLinkJustIcon}
+        {user && (
+          <ListItem className={classes.listItem}>
+            <Tooltip
+              id='tooltip-perfil'
+              title='Perfil'
+              placement='top'
+              classes={{ tooltip: classes.tooltip }}
+              onClick={() => navegar("perfil")}
             >
-              <Face />
-            </Button>
-          </Tooltip>
-        </ListItem>
-      )}
-
-        {user &&( 
-
-        <ListItem className={classes.listItem}>
-        
-          <Tooltip
-            id='tooltip-carrito'
-            title='carrito'
-            placement='top'
-            classes={{ tooltip: classes.tooltip }}
-          >
-            <Button
-              color='transparent'
-              justIcon
-              className={classes.navLink + " " + classes.navLinkJustIcon}
-              onClick={() => navegar("carrito")}
-            >
-              <ShoppingBasket />
-              <div
-                style={{
-                  fontSize: "12px",
-                  color: "#fff",
-                  background: "red",
-                  borderRadius: "50%",
-                  padding: "0 5px",
-                  position: "relative",
-                  left: "-8px",
-                  top: "-10px",
-                  opacity: "0.9",
-                }}
+              <Button
+                color='transparent'
+                className={classes.navLink + " " + classes.navLinkJustIcon}
               >
-                {cart && cart.totalProductos > 0 ? cart.totalProductos : ""}
-              </div>
-            </Button>
-          </Tooltip>
-        </ListItem>
-         )}
+                <AccountCircleIcon />
+              </Button>
+            </Tooltip>
+          </ListItem>
+        )}
+
+        {user && (
+
+          <ListItem className={classes.listItem}>
+
+            <Tooltip
+              id='tooltip-carrito'
+              title='Carrito'
+              placement='top'
+              classes={{ tooltip: classes.tooltip }}
+            >
+              <Button
+                color='transparent'
+                justIcon
+                className={classes.navLink + " " + classes.navLinkJustIcon}
+                onClick={() => navegar("carrito")}
+              >
+                <ShoppingCartIcon />
+                <div
+                  style={{
+                    fontSize: "12px",
+                    color: "#fff",
+                    background: "red",
+                    borderRadius: "50%",
+                    padding: "0 5px",
+                    position: "relative",
+                    left: "-8px",
+                    top: "-10px",
+                    opacity: "0.9",
+                  }}
+                >
+                  {cart && cart.totalProductos > 0 ? cart.totalProductos : ""}
+                </div>
+              </Button>
+            </Tooltip>
+          </ListItem>
+        )}
         <ListItem className={classes.listItem}>
-          
-    
+
+
           <Tooltip
             id='tooltip-loginOut'
-            title={user ? "deslogearse" : "iniciar sesion"}
+            title={user ? "Cerrar Sesion" : "iniciar Sesion"}
             placement='top'
             classes={{ tooltip: classes.tooltip }}
           >
@@ -193,7 +195,7 @@ export default function HeaderLinks() {
             </Button>
           </Tooltip>
         </ListItem>
-       
+
       </List>
     </div>
   );

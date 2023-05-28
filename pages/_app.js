@@ -21,6 +21,7 @@ import Head from "next/head";
 import Router from "next/router";
 import Header from "/components/Header/Header.js";
 import HeaderLinks from "/components/Header/HeaderLinks.js";
+import FooterGlobal from "../componentesPropios/FooterGlobal"
 import {
   ThemeProvider,
   createTheme,
@@ -125,6 +126,7 @@ export default class MyApp extends App {
                   color='rose'
                 />
                 <Component {...pageProps} />
+                <FooterGlobal />
               </>
             </AuthContextProvider>
           </StyledEngineProvider>

@@ -24,10 +24,13 @@ import Table from "/components/Table/Table.js";
 import Button from "/components/CustomButtons/Button.js";
 import Card from "/components/Card/Card.js";
 import CardBody from "/components/Card/CardBody.js";
+// propios
+import DialogPersonalizado from "../componentesPropios/DialogPersonalizado.js"
+//firebase
 import { getTickets } from "../firebaseConexion/tickets";
 
 import shoppingCartStyle from "/styles/jss/nextjs-material-kit-pro/pages/shoppingCartStyle.js";
-
+//context
 import { useAuthContext } from "../context/authContext.js";
 
 const useStyles = makeStyles(shoppingCartStyle);
@@ -35,6 +38,10 @@ const useStyles = makeStyles(shoppingCartStyle);
 export default function tickets() {
   const router = useRouter();
   const { user, cart } = useAuthContext();
+  //Control de Dialog errores
+  const [mostrarDialog, setMostrarDialog] = useState(false)
+  const [mensajeDialog, setMensajeDialog] = useState("Inicia sesión para poder agregar productos al carrito")
+
   const [tableDataSoporte, setTableDataSoporte] = useState([])
   const [tableDataCompra, setTableDataCompra] = useState([])
   React.useEffect(() => {
@@ -47,32 +54,34 @@ export default function tickets() {
       getTickets(user.uid).then((res) => {
 
         let arreglo = []
-        res.soportes.map((soporte, index) => {
-          arreglo.push(
-            [
-              <span key={"ticket-titulo-" + index}>
-                <a>
-                  {soporte.titulo}
-                </a>
-              </span>,
-              <span key={"ticket-descripcion-" + index}>
-                <a>
-                  {soporte.descripcion}
-                </a>
-              </span>,
-              <span key={"ticket-fecha-" + index}>
-                <a>
-                  {soporte.fechaActualizacion}
-                </a>
-              </span>,
-              <span key={"ticket-soporte-" + index}>
-                <a>
-                  {soporte.status}
-                </a>
-              </span>
-            ]
-          )
-        })
+        if (res != null) {
+          res.soportes.map((soporte, index) => {
+            arreglo.push(
+              [
+                <span key={"ticket-titulo-" + index}>
+                 
+                    {soporte.titulo}
+                  
+                </span>,
+                <span key={"ticket-descripcion-" + index}>
+                
+                    {soporte.descripcion}
+                
+                </span>,
+                <span key={"ticket-fecha-" + index}>
+                
+                    {soporte.fechaActualizacion}
+                
+                </span>,
+                <span key={"ticket-soporte-" + index}>
+                
+                    {soporte.status}
+                
+                </span>
+              ]
+            )
+          })
+        }
 
         setTableDataSoporte(arreglo)
 
@@ -87,15 +96,35 @@ export default function tickets() {
 
   }, []);
 
-  const goToCrearTicket = () =>{
-    router.push("crearTicket");
+  const goToCrearTicket = () => {
+    if (comprobarInicioSesion()) {
+      router.push("crearTicket");
+    } else {
+      setMostrarDialog(true)
+    }
   }
   const classes = useStyles();
+
+  const goToIniciar = () => {
+    router.push("inicioSesion");
+  };
+
+  const comprobarInicioSesion = () => {
+    if (user != null) return true
+  }
+
   return (
     <div>
 
+      <DialogPersonalizado
+        visibilidad={mostrarDialog}
+        setVisibilidad={setMostrarDialog}
+        mensaje={mensajeDialog}
+        tituloBotonAceptar="Iniciar Sesión"
+        accionBotonAceptar={goToIniciar}
+      />
 
-      <Parallax image="/img/examples/bg2.jpg" filter="dark" small>
+      <Parallax image="/img/fondo/Background.png" filter="dark" small>
         <div className={classes.container}>
           <GridContainer>
             <GridItem
@@ -107,7 +136,12 @@ export default function tickets() {
                 classes.textCenter
               )}
             >
-              <h2 className={classes.title}>Pagina de soporte</h2>
+              <div className={classes.brand}>
+                <h1 className={classes.title}>Soporte</h1>
+                <h4>
+                  Reporta cualquier problema y con gusto te ayudaremos
+                </h4>
+              </div>
             </GridItem>
           </GridContainer>
         </div>
@@ -126,7 +160,9 @@ export default function tickets() {
                   placement="top"
                   classes={{ tooltip: classes.tooltip }}
                 >
-                  <Button onClick={goToCrearTicket} style={{ marginLeft: 'auto' }} justIcon round color="primary"><Add style={{ color: "#FFFFFF" }} />
+                  <Button onClick={
+                    goToCrearTicket
+                  } style={{ marginLeft: 'auto' }} justIcon round color="primary"><Add style={{ color: "#FFFFFF" }} />
                   </Button>
                 </Tooltip>
               </div>

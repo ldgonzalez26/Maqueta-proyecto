@@ -25,30 +25,39 @@ import { agregarAlCarrito as addProducto } from "../firebaseConexion/carrito";
 const useStyles = makeStyles(styles);
 
 export default function SectionLatestOffers(props) {
-  const { planes } = props;
+  const { planes, mostrarDialog, setMostrarDialog } = props;
   const { user } = useAuthContext();
   const classes = useStyles();
   const [simpleSelect, setSimpleSelect] = useState("");
+
   const handleSimple = (event) => {
     setSimpleSelect(event.target.value);
   };
 
+  const comprobarInicioSesion = () => {
+    if(user != null) return true
+  }
+
   const agregarAlCarrito = (producto) => {
-    console.log(user.uid, producto);
-    addProducto(user.uid, JSON.parse(JSON.stringify(producto)))
-      .then((res) => {
-        console.log("añadido: ", res);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if(comprobarInicioSesion()){
+      /* console.log(user.uid, producto); */
+      addProducto(user.uid, JSON.parse(JSON.stringify(producto)))
+        .then((res) => {
+          /* console.log("añadido: ", res); */
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }else{
+      setMostrarDialog(true)
+    }
   };
 
   return (
     <div className={classes.section}>
       <div className={classes.container}>
         <h2>Planes y Servicios disponibles</h2>
-        <Select
+{/*         <Select
           MenuProps={{
             className: classes.selectMenu,
           }}
@@ -97,14 +106,14 @@ export default function SectionLatestOffers(props) {
           >
             Rome
           </MenuItem>
-        </Select>
+        </Select> */}
         <GridContainer>
           {planes.map((plan) => (
             <GridItem md={4} sm={4}>
               <Card product plain>
                 <CardHeader image plain>
-                  <a href='#pablo'>
-                    <img src='/img/examples/gucci.jpg' alt='...' />
+                  <a>
+                    <img src={plan.img} alt='...' />
                   </a>
                   <div
                     className={classes.coloredShadow}

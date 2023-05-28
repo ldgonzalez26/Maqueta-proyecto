@@ -37,8 +37,13 @@ export const agregarCompra = async (userId, compra) => {
 };
 
 export const agregarSoporte = async (userId, soporte) => {
-  const docRef = await getDoc(doc(db, "tickets", userId));
-  const data = docRef.data();
+  let docRef = await getDoc(doc(db, "tickets", userId));
+  let data = docRef.data();
+  if(data == null){
+    await crearTickets(userId)
+    docRef = await getDoc(doc(db, "tickets", userId));
+    data = docRef.data();
+  }
   let soportes = data.soportes;
   soporte.status = "En proceso";
   let totalSoportes = data.totalSoportes ? data.totalSoportes : 0;

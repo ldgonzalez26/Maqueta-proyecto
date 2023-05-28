@@ -8,6 +8,7 @@ import Icon from "@mui/material/Icon";
 // @mui/icons-material
 import Group from "@mui/icons-material/Group";
 import Email from "@mui/icons-material/Email";
+import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import Favorite from "@mui/icons-material/Favorite";
 // core components
 import Footer from "/components/Footer/Footer.js";
@@ -19,8 +20,11 @@ import CardBody from "/components/Card/CardBody.js";
 import InfoArea from "/components/InfoArea/InfoArea.js";
 import CustomInput from "/components/CustomInput/CustomInput.js";
 import FormControlLabel from "@mui/material/FormControlLabel";
+//propios
+import DialogPersonalizado from "../componentesPropios/DialogPersonalizado.js"
 //firebase
 import signUp from "../firebaseConexion/signup";
+import {crearUser} from "../firebaseConexion/users"
 
 import signupPageStyle from "/styles/jss/nextjs-material-kit-pro/pages/signupPageStyle.js";
 import { useRouter } from "next/router";
@@ -28,7 +32,11 @@ import { useRouter } from "next/router";
 const useStyles = makeStyles(signupPageStyle);
 
 export default function Registro({ ...rest }) {
+  
   const router = useRouter();
+  const [mostrarDialog, setMostrarDialog] = useState(false)
+  const [mensajeDialog, setMensajeDialog] = useState("Hubo un error durante la fase de registro, por favor verifica todos los datos o la conexión a internet y vuelve a intentarlo")
+
   const [checked, setChecked] = React.useState([1]);
   const handleToggle = (value) => {
     const currentIndex = checked.indexOf(value);
@@ -46,24 +54,42 @@ export default function Registro({ ...rest }) {
   });
   const classes = useStyles();
 
+  const [inputNombre, setInputNombre] = useState("");
   const [inputEmail, setInputEmail] = useState("");
   const [inputPassword, setInputPassword] = useState("");
 
-  const registrar = () => {
-    signUp(inputEmail, inputPassword).then((res) => {
+  const registrar = async () => {
+    let userId = ''
+    let response = await signUp(inputEmail, inputPassword).then((res) => {
       if (res.error) {
-        console.log("hubo un error, mostrar algo lindo");
+        setMostrarDialog(true)
         console.log("error", res.error);
       } else {
-        router.push("inicioSesion");
+        userId = res.result._tokenResponse.localId
+        //console.log("Mostar modal que diga que todo salio bien y al darle ok te lleve a pagina de inicio de sesion")
+        goToCatalogo()
       }
     });
+    if(response == null){
+      await crearUser(userId, inputNombre, inputEmail)
+    }
   };
   const goTologin = () => {
     router.push("inicioSesion");
   };
+
+  const goToCatalogo = () =>{
+    router.push("catalogo");
+  }
+
   return (
     <div>
+      <DialogPersonalizado
+        visibilidad={mostrarDialog}
+        setVisibilidad={setMostrarDialog}
+        mensaje={mensajeDialog}
+        tituloBotonAceptar="Ok"
+      />
       <div
         className={classes.pageHeader}
         style={{
@@ -80,20 +106,6 @@ export default function Registro({ ...rest }) {
                 <CardBody>
                   <GridContainer justifyContent='center'>
                     <GridItem xs={12} sm={5} md={5}>
-                      {/*                       <InfoArea
-                        className={classes.infoArea}
-                        title="Marketing"
-                        description="We've created the marketing campaign of the website. It was a very interesting collaboration."
-                        icon={Timeline}
-                        iconColor="rose"
-                      />
-                      <InfoArea
-                        className={classes.infoArea}
-                        title="Fully Coded in HTML5"
-                        description="We've developed the website with HTML5 and CSS3. The client has access to the code using GitHub."
-                        icon={Code}
-                        iconColor="primary"
-                      /> */}
                       <InfoArea
                         className={classes.infoArea}
                         title='¿Por qué registrarse?'
@@ -104,6 +116,24 @@ export default function Registro({ ...rest }) {
                     </GridItem>
                     <GridItem xs={12} sm={5} md={5}>
                       <form className={classes.form}>
+                      <CustomInput
+                          setText={setInputNombre}
+                          formControlProps={{
+                            fullWidth: true,
+                            className: classes.customFormControlClasses,
+                          }}
+                          inputProps={{
+                            startAdornment: (
+                              <InputAdornment
+                                position='start'
+                                className={classes.inputAdornment}
+                              >
+                                <PermIdentityIcon className={classes.inputAdornmentIcon} />
+                              </InputAdornment>
+                            ),
+                            placeholder: "Nombre Completo",
+                          }}
+                        />
                         <CustomInput
                           setText={setInputEmail}
                           formControlProps={{

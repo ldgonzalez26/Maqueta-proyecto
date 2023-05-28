@@ -22,13 +22,19 @@ import InfoArea from "/components/InfoArea/InfoArea.js";
 import CustomInput from "/components/CustomInput/CustomInput.js";
 //firebase
 import signIn from "../firebaseConexion/singin";
+//propios
+import DialogPersonalizado from "../componentesPropios/DialogPersonalizado.js"
 
 import signupPageStyle from "/styles/jss/nextjs-material-kit-pro/pages/signupPageStyle.js";
 
 const useStyles = makeStyles(signupPageStyle);
 
 export default function InicioSesion({ ...rest }) {
+
   const router = useRouter();
+  const [mostrarDialog, setMostrarDialog] = useState(false)
+  const [mensajeDialog, setMensajeDialog] = useState("Error durante el inicio de sesión, revise su email o contraseña")
+
   const [checked, setChecked] = React.useState([1]);
   const handleToggle = (value) => {
     const currentIndex = checked.indexOf(value);
@@ -55,12 +61,13 @@ export default function InicioSesion({ ...rest }) {
         if (res.result) {
           router.push("/catalogo");
         } else {
-          console.log("error mostrar algo lindo");
+          setMostrarDialog(true)
           setInputEmail("");
           setInputPassword("");
         }
       })
       .catch((error) => {
+        setMostrarDialog(true)
         console.log(error);
       });
   };
@@ -69,6 +76,12 @@ export default function InicioSesion({ ...rest }) {
   };
   return (
     <div>
+      <DialogPersonalizado
+        visibilidad={mostrarDialog}
+        setVisibilidad={setMostrarDialog}
+        mensaje={mensajeDialog}
+        tituloBotonAceptar="Ok"
+      />
       <div
         className={classes.pageHeader}
         style={{

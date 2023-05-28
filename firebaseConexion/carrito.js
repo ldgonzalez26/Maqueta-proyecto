@@ -20,8 +20,13 @@ export const crearCarrito = async (userId) => {
 };
 
 export const agregarAlCarrito = async (userId, producto) => {
-  const docRef = await getDoc(doc(db, "carrito", userId));
-  const data = docRef.data();
+  let docRef = await getDoc(doc(db, "carrito", userId));
+  let data = docRef.data();
+  if(data == null){
+    await crearCarrito(userId)
+    docRef = await getDoc(doc(db, "carrito", userId));
+    data = docRef.data();
+  }
   let productosEnCarrito = data.productos;
   let productoEncontrado = false;
   producto.precioTotal = producto.precio;

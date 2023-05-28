@@ -45,10 +45,12 @@ import { agregarAlCarrito as addProducto, quitarDelCarrito as removeProducto } f
 import shoppingCartStyle from "/styles/jss/nextjs-material-kit-pro/pages/shoppingCartStyle.js";
 import ModalStyle from "/styles/jss/nextjs-material-kit-pro/pages/componentsSections/javascriptStyles.js";
 import selectStyle from "/styles/jss/nextjs-material-kit-pro/pages/componentsSections/basicsStyle.js";
+import parallaxStyle from "/styles/jss/nextjs-material-kit-pro/pages/ecommerceStyle.js";
 
 const useStyles = makeStyles(shoppingCartStyle);
 const useStylesDialog = makeStyles(ModalStyle);
 const useStylesSelect = makeStyles(selectStyle);
+const useStyleParralax = makeStyles(parallaxStyle)
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='down' ref={ref} {...props} />;
@@ -157,6 +159,7 @@ export default function Carrito() {
   const classes = useStyles();
   const classesDialog = useStylesDialog();
   const classesSelect = useStylesSelect();
+  const classesParallax = useStyleParralax();
 
   const openModal = () => {
     setLoginModal(true);
@@ -191,18 +194,18 @@ export default function Carrito() {
       });
   };
 
-  const agregarAlCarrito = (producto) =>{
-    addProducto(user.uid, producto).then(res =>{
+  const agregarAlCarrito = (producto) => {
+    addProducto(user.uid, producto).then(res => {
       console.log("añadiendo al carrito: ", res)
-    }).catch(error =>{
+    }).catch(error => {
       console.log("Error añadiendo al carrito ", error)
     })
   }
 
-  const quitarDelCarrito = (producto) =>{
-    removeProducto(user.uid, producto).then(res =>{
+  const quitarDelCarrito = (producto) => {
+    removeProducto(user.uid, producto).then(res => {
       console.log("Quitando al carrito: ", res)
-    }).catch(error =>{
+    }).catch(error => {
       console.log("Quitando añadiendo al carrito ", error)
     })
   }
@@ -385,23 +388,29 @@ export default function Carrito() {
         </Card>
       </Dialog>
 
-      <Parallax image='/img/examples/bg2.jpg' filter='dark' small>
-        <div className={classes.container}>
+      <Parallax image='/img/fondo/Background.png' filter='dark' small>
+        <div className={classesParallax.container}>
           <GridContainer>
             <GridItem
               md={8}
               sm={8}
               className={classNames(
-                classes.mlAuto,
-                classes.mrAuto,
-                classes.textCenter
+                classesParallax.mlAuto,
+                classesParallax.mrAuto,
+                classesParallax.textCenter
               )}
             >
-              <h2 className={classes.title}>Carrito</h2>
+              <div className={classesParallax.brand}>
+                <h1 className={classesParallax.title}>Carrito</h1>
+                <h4>
+                  ¡Sí todos los productos que deseas estan en el listado completa la compra!
+                </h4>
+              </div>
             </GridItem>
           </GridContainer>
         </div>
       </Parallax>
+
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
           <Card plain>
@@ -411,8 +420,8 @@ export default function Carrito() {
                   Productos <span>({cart.productos.length})</span>
                 </h3>
               ) : (
-                <div></div>
-              )}
+                  <div></div>
+                )}
               {cart && cart.productos.length > 0 ? (
                 <Table
                   tableHead={[
@@ -445,27 +454,27 @@ export default function Carrito() {
                   customClassesForCells={[0, 1, 2, 3, 4, 5]}
                 />
               ) : (
-                <div className={classes.container}>
-                  <br />
-                  <GridContainer>
-                    <GridItem
-                      md={6}
-                      sm={6}
-                      className={classNames(
-                        classes.mlAuto,
-                        classes.mrAuto,
-                        classes.textCenter
-                      )}
-                    >
-                      <Danger>
-                        <h2>No hay productos en el carrito</h2>
-                      </Danger>
-                    </GridItem>
-                  </GridContainer>
-                  <br />
-                  <br />
-                </div>
-              )}
+                  <div className={classes.container}>
+                    <br />
+                    <GridContainer>
+                      <GridItem
+                        md={6}
+                        sm={6}
+                        className={classNames(
+                          classes.mlAuto,
+                          classes.mrAuto,
+                          classes.textCenter
+                        )}
+                      >
+                        <Danger>
+                          <h2>No hay productos en el carrito</h2>
+                        </Danger>
+                      </GridItem>
+                    </GridContainer>
+                    <br />
+                    <br />
+                  </div>
+                )}
             </CardBody>
           </Card>
         </div>

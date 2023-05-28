@@ -1,5 +1,6 @@
 /*eslint-disable*/
 import React, { useState, useContext } from "react";
+import { useRouter } from "next/router";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 import makeStyles from "@mui/styles/makeStyles";
@@ -7,8 +8,6 @@ import InputAdornment from "@mui/material/InputAdornment";
 // @material-ui icons
 import Mail from "@mui/icons-material/Mail";
 // core components
-import Header from "/components/Header/Header.js";
-import HeaderLinks from "/components/Header/HeaderLinks.js";
 import GridContainer from "/components/Grid/GridContainer.js";
 import GridItem from "/components/Grid/GridItem.js";
 import Parallax from "/components/Parallax/Parallax.js";
@@ -16,24 +15,25 @@ import Button from "/components/CustomButtons/Button.js";
 import Card from "/components/Card/Card.js";
 import CardBody from "/components/Card/CardBody.js";
 import CustomInput from "/components/CustomInput/CustomInput.js";
-import Footer from "/components/Footer/Footer.js";
-// sections for this page
-
+// propios
+import DialogPersonalizado from "../componentesPropios/DialogPersonalizado.js"
 import SectionPlans from "../componentesPropios/SectionPlans.js";
 
 import styles from "/styles/jss/nextjs-material-kit-pro/pages/ecommerceStyle.js";
 
 //Propio
-import FooterGlobal from "../componentesPropios/FooterGlobal";
 import { getPlanes } from "../firebaseConexion/productos.js";
 
 const useStyles = makeStyles(styles);
 
 export default function CatalogoPage() {
-  /* console.log(user) */
 
+  const router = useRouter();
+  //Control de Dialog errores
+
+  const [mostrarDialog, setMostrarDialog] = useState(false)
+  const [mensajeDialog, setMensajeDialog] = useState("Inicia sesión para poder agregar productos al carrito")
   const [planes, setPlanes] = useState([]);
-
   const [simpleSelect, setSimpleSelect] = useState("");
 
   React.useEffect(() => {
@@ -48,19 +48,20 @@ export default function CatalogoPage() {
 
   const classes = useStyles();
 
+  const goToIniciar = () => {
+    router.push("inicioSesion");
+  };
+
   return (
     <div>
-      {/*       <Header
-        brand="NextJS Material Kit PRO"
-        links={<HeaderLinks dropdownHoverColor="info" />}
-        fixed
-        color="transparent"
-        changeColorOnScroll={{
-          height: 300,
-          color: "info"
-        }}
-      /> */}
-      <Parallax image='/img/examples/clark-street-merc.jpg' filter='dark' small>
+      <DialogPersonalizado
+        visibilidad={mostrarDialog}
+        setVisibilidad={setMostrarDialog}
+        mensaje={mensajeDialog}
+        tituloBotonAceptar="Iniciar Sesión"
+        accionBotonAceptar={goToIniciar}
+      />
+      <Parallax image='/img/fondo/Background.png' filter='dark' small>
         <div className={classes.container}>
           <GridContainer>
             <GridItem
@@ -73,10 +74,9 @@ export default function CatalogoPage() {
               )}
             >
               <div className={classes.brand}>
-                <h1 className={classes.title}>Ecommerce Page!</h1>
+                <h1 className={classes.title}>Catálogo de Planes y Productos</h1>
                 <h4>
-                  Free global delivery for all products. Use coupon{" "}
-                  <b>25summer</b> for an extra 25% Off
+                  Agrega a tu carrito todo lo que desees
                 </h4>
               </div>
             </GridItem>
@@ -85,9 +85,12 @@ export default function CatalogoPage() {
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <SectionPlans planes={planes} />
+        <SectionPlans
+          mostrarDialog={mostrarDialog}
+          setMostrarDialog={setMostrarDialog}
+          planes={planes} />
       </div>
-
+      {/* 
       <div
         className={classNames(
           classes.subscribeLine,
@@ -148,8 +151,8 @@ export default function CatalogoPage() {
           </GridContainer>
         </div>
       </div>
+     */}
 
-      <FooterGlobal />
     </div>
   );
 }

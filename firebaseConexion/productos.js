@@ -18,8 +18,8 @@ export const getPlanes = async () => {
   let arregloPlanes = [];
   querySnapshot.forEach((doc) => {
     let id = doc.id;
-    let { Categoria, Descripcion, Duracion, Nombre, Precio, Tipo } = doc.data();
-    let plan = new Plan(Nombre, Tipo, Categoria, Duracion, Precio, Descripcion);
+    let { Categoria, Descripcion, Duracion, Nombre, Precio, Tipo, Img } = doc.data();
+    let plan = new Plan(Nombre, Tipo, Categoria, Duracion, Precio, Descripcion, Img);
     arregloPlanes.push(plan);
   });
   return arregloPlanes;

@@ -24,10 +24,12 @@ import Table from "/components/Table/Table.js";
 import Button from "/components/CustomButtons/Button.js";
 import Card from "/components/Card/Card.js";
 import CardBody from "/components/Card/CardBody.js";
-import { getTickets } from "../firebaseConexion/tickets";
-
 import shoppingCartStyle from "/styles/jss/nextjs-material-kit-pro/pages/shoppingCartStyle.js";
-
+// propios
+import DialogPersonalizado from "../componentesPropios/DialogPersonalizado.js"
+//firebase
+import { getTickets } from "../firebaseConexion/tickets";
+//context
 import { useAuthContext } from "../context/authContext.js";
 
 const useStyles = makeStyles(shoppingCartStyle);
@@ -35,6 +37,11 @@ const useStyles = makeStyles(shoppingCartStyle);
 export default function ticketsCompra() {
   const router = useRouter();
   const { user, cart } = useAuthContext();
+
+  //Control de Dialog errores
+  const [mostrarDialog, setMostrarDialog] = useState(false)
+  const [mensajeDialog, setMensajeDialog] = useState("Inicia sesión para poder agregar productos al carrito")
+
   const [tableDataSoporte, setTableDataSoporte] = useState([])
   const [tableDataCompra, setTableDataCompra] = useState([])
   React.useEffect(() => {
@@ -47,42 +54,44 @@ export default function ticketsCompra() {
       getTickets(user.uid).then((res) => {
 
         let arreglo = []
-        res.compras.map((compra, index) => {
-          arreglo.push(
-            [
-              <span key={"compra-nombre-" + index}>
-                <a>
-                  {compra.nombre}
-                </a>
-              </span>,
-              <span key={"compra-codigo-" + index}>
-                <a>
-                  {compra.codigo}
-                </a>
-              </span>,
-              <span key={"compra-fecha-" + index}>
-                <a>
-                  {compra.fechaActualizacion}
-                </a>
-              </span>,
-              <span key={"compra-metodo-" + index}>
-                <a>
-                  {compra.metodo}
-                </a>
-              </span>,
-              <span key={"compra-monto-" + index}>
-                <a>
-                  {compra.monto}
-                </a>
-              </span>,
-              <span key={"compra-estado-" + index}>
-                <a>
-                  {compra.status}
-                </a>
-              </span>
-            ]
-          )
-        })
+        if (res != null) {
+          res.compras.map((compra, index) => {
+            arreglo.push(
+              [
+                <span key={"compra-nombre-" + index}>
+                  
+                    {compra.nombre}
+                  
+                </span>,
+                <span key={"compra-codigo-" + index}>
+                  
+                    {compra.codigo}
+                  
+                </span>,
+                <span key={"compra-fecha-" + index}>
+                  
+                    {compra.fechaActualizacion}
+                  
+                </span>,
+                <span key={"compra-metodo-" + index}>
+                  
+                    {compra.metodo}
+                  
+                </span>,
+                <span key={"compra-monto-" + index}>
+                  
+                    {compra.monto}
+                  
+                </span>,
+                <span key={"compra-estado-" + index}>
+                  
+                    {compra.status}
+                  
+                </span>
+              ]
+            )
+          })
+        }
 
         setTableDataCompra(arreglo)
 
@@ -100,14 +109,31 @@ export default function ticketsCompra() {
   const classes = useStyles();
 
   const goToCatalogo = () => {
-    router.push("catalogo");
+    if (comprobarInicioSesion()) {
+      router.push("catalogo");
+    } else {
+      setMostrarDialog(true)
+    }
   };
+
+  const goToIniciar = () => {
+    router.push("inicioSesion");
+  };
+
+  const comprobarInicioSesion = () => {
+    if (user != null) return true
+  }
 
   return (
     <div>
-
-
-      <Parallax image="/img/examples/bg2.jpg" filter="dark" small>
+      <DialogPersonalizado
+        visibilidad={mostrarDialog}
+        setVisibilidad={setMostrarDialog}
+        mensaje={mensajeDialog}
+        tituloBotonAceptar="Iniciar Sesión"
+        accionBotonAceptar={goToIniciar}
+      />
+      <Parallax image="/img/fondo/Background.png" filter="dark" small>
         <div className={classes.container}>
           <GridContainer>
             <GridItem
@@ -119,7 +145,12 @@ export default function ticketsCompra() {
                 classes.textCenter
               )}
             >
-              <h2 className={classes.title}>Tus Compras</h2>
+              <div className={classes.brand}>
+                <h1 className={classes.title}>Lista de compras</h1>
+                <h4>
+                  Visualiza tus compras pendientes por procesar y tu histórico de compras
+                </h4>
+              </div>
             </GridItem>
           </GridContainer>
         </div>
@@ -164,7 +195,6 @@ export default function ticketsCompra() {
                 customHeadClassesForCells={[0, 2, 3, 4, 5, 6]}
                 customCellClasses={[
                   classes.tdName,
-                  classes.customFont,
                   classes.customFont,
                   classes.tdNumber,
                   classes.tdNumber + " " + classes.tdNumberAndButtonGroup,

@@ -1,5 +1,6 @@
 import React from "react";
 import { onAuthStateChanged, getAuth } from "firebase/auth";
+import {getUser} from "../firebaseConexion/users"
 import { app, db } from "../firebaseConexion/firebaseConfig";
 import { doc, onSnapshot } from "firebase/firestore";
 const auth = getAuth(app);
@@ -17,7 +18,11 @@ export const AuthContextProvider = ({ children }) => {
   React.useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
-        setUser(user);
+        getUser(user.uid).then(respuesta => {
+          user.nombre = respuesta.nombre
+          user.tipoUsuario = respuesta.tipoUsuario
+          setUser(user);
+        })
       } else {
         setUser(null);
       }

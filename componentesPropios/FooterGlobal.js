@@ -39,7 +39,7 @@ export default function CatalogoPage() {
             content={
                 <div>
                     <div className={classes.left}>
- {/*                        <List className={classes.list}>
+                        {/*                        <List className={classes.list}>
                             <ListItem className={classes.inlineBlock}>
                                 <a
                                     href="http://blog.creative-tim.com/?ref=njsmkp-e-ecommerce"
@@ -87,17 +87,17 @@ export default function CatalogoPage() {
                             </ListItem>
                         </List> */}
                     </div>
-                    <div className={classes.right}>
-                        Copyright &copy; {1900 + new Date().getYear()}{" "}
+{/*                     <div className={classes.right}>
+                        Latinove &copy; {1900 + new Date().getYear()}{" "}
                         <a
                             href="https://www.creative-tim.com?ref=njsmkp-e-ecommerce"
                             target="_blank"
                             className={classes.aClasses}
                         >
-                            
-              </a>{" "}
-                        All Rights Reserved.
-            </div>
+
+                        </a>{" "}
+                        Todos los derechos reservados.
+                    </div> */}
                 </div>
             }
         >
@@ -105,32 +105,17 @@ export default function CatalogoPage() {
                 <GridItem xs={12} sm={4} md={4}>
                     <h5>Acerca de</h5>
                     <p>
-                        Creative Tim is a startup that creates design tools that make the
-              web development process faster and easier.{" "}
-                    </p>
-                    <p>
-                        We love the web and care deeply for how users interact with a
-                        digital product. We power businesses and individuals to create
-              better looking web projects around the world.{" "}
+                        En Latinove queremos que disfrutes al máximo contenido de calidad con todas las comodidades.
                     </p>
                 </GridItem>
                 <GridItem xs={12} sm={4} md={4}>
                     <h5>Redes Sociales</h5>
                     <div className={classes.socialFeed}>
                         <div>
-                            <i className="fab fa-twitter" />
-                            <p>How to handle ethical disagreements with your clients.</p>
-                        </div>
-                        <div>
-                            <i className="fab fa-twitter" />
-                            <p>The tangible benefits of designing at 1x pixel density.</p>
-                        </div>
-                        <div>
-                            <i className="fab fa-facebook-square" />
+                            <i className="fab fa-instagram" />
                             <p>
-                                A collection of 25 stunning sites that you can use for
-                                inspiration.
-                </p>
+                                <a href="https://www.instagram.com/netflixlatinove/" target="_blank">@latinove</a>
+                            </p>
                         </div>
                     </div>
                 </GridItem>
@@ -138,7 +123,7 @@ export default function CatalogoPage() {
                     <h5>Servicios Disponibles</h5>
                     <div className={classes.galleryFeed}>
                         <img
-                            src="/img/faces/card-profile6-square.jpg"
+                            src="/img/logos/logoDisney.png"
                             className={classNames(
                                 classes.img,
                                 classes.imgRaised,
@@ -147,7 +132,7 @@ export default function CatalogoPage() {
                             alt="..."
                         />
                         <img
-                            src="/img/faces/christian.jpg"
+                            src="/img/logos/logoNetflix.png"
                             className={classNames(
                                 classes.img,
                                 classes.imgRaised,
@@ -156,7 +141,7 @@ export default function CatalogoPage() {
                             alt="..."
                         />
                         <img
-                            src="/img/faces/card-profile4-square.jpg"
+                            src="/img/logos/logoHBO.png"
                             className={classNames(
                                 classes.img,
                                 classes.imgRaised,
@@ -165,43 +150,7 @@ export default function CatalogoPage() {
                             alt="..."
                         />
                         <img
-                            src="/img/faces/card-profile1-square.jpg"
-                            className={classNames(
-                                classes.img,
-                                classes.imgRaised,
-                                classes.imgRounded
-                            )}
-                            alt="..."
-                        />
-                        <img
-                            src="/img/faces/marc.jpg"
-                            className={classNames(
-                                classes.img,
-                                classes.imgRaised,
-                                classes.imgRounded
-                            )}
-                            alt="..."
-                        />
-                        <img
-                            src="/img/faces/kendall.jpg"
-                            className={classNames(
-                                classes.img,
-                                classes.imgRaised,
-                                classes.imgRounded
-                            )}
-                            alt="..."
-                        />
-                        <img
-                            src="/img/faces/card-profile5-square.jpg"
-                            className={classNames(
-                                classes.img,
-                                classes.imgRaised,
-                                classes.imgRounded
-                            )}
-                            alt="..."
-                        />
-                        <img
-                            src="/img/faces/card-profile2-square.jpg"
+                            src="/img/logos/logoMas.png"
                             className={classNames(
                                 classes.img,
                                 classes.imgRaised,
