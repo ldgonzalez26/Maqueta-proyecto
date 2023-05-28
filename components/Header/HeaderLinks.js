@@ -161,7 +161,7 @@ export default function HeaderLinks() {
                   style={{
                     fontSize: "12px",
                     color: "#fff",
-                    background: "red",
+                    background: "#820000",
                     borderRadius: "50%",
                     padding: "0 5px",
                     position: "relative",

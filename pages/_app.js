@@ -113,14 +113,14 @@ export default class MyApp extends App {
             content='width=device-width, initial-scale=1, shrink-to-fit=no'
           />
           {/* <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE" /> */}
-          <title>LATINOVE</title>
+          <title>GomitasD'Landys</title>
         </Head>
         <ThemeProvider theme={theme}>
           <StyledEngineProvider injectFirst>
             <AuthContextProvider>
               <>
                 <Header
-                  brand='Latinove'
+                  brand="Gomitas"
                   links={<HeaderLinks dropdownHoverColor='danger' />}
                   fixed
                   color='rose'
