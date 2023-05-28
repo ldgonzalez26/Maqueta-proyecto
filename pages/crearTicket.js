@@ -27,7 +27,7 @@ import { useAuthContext } from "../context/authContext.js";
 
 import signupPageStyle from "/styles/jss/nextjs-material-kit-pro/pages/signupPageStyle.js";
 import { Prdocuto } from "../clasesTS/Producto.ts"
-import { TicketSoporte } from "../clasesTS/TicketSoporte.ts";
+import { TicketSoporte } from "../clasesTS/Ticketsoporte.ts";
 
 const useStyles = makeStyles(signupPageStyle);
 
