@@ -70,11 +70,6 @@ export default function ProfilePage({ ...rest }) {
                 </div>
                 <div className={classes.name}>
                   <h3 className={classes.title}>Editar perfil</h3>
-                  
-                  
-                    
-                  
-                   
                 </div>
               </div>
               
