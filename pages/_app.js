@@ -14,42 +14,42 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 */
-import React from "react";
-import ReactDOM from "react-dom";
-import App from "next/app";
-import Head from "next/head";
-import Router from "next/router";
-import Header from "/components/Header/Header.js";
-import HeaderLinks from "/components/Header/HeaderLinks.js";
-import FooterGlobal from "../componentesPropios/FooterGlobal"
+import React from 'react';
+import ReactDOM from 'react-dom';
+import App from 'next/app';
+import Head from 'next/head';
+import Router from 'next/router';
+import Header from '/components/Header/Header.js';
+import HeaderLinks from '/components/Header/HeaderLinks.js';
+import FooterGlobal from '../componentesPropios/FooterGlobal';
 import {
   ThemeProvider,
   createTheme,
   StyledEngineProvider,
-} from "@mui/material/styles";
+} from '@mui/material/styles';
 
-import PageChange from "/components/PageChange/PageChange.js";
+import PageChange from '/components/PageChange/PageChange.js';
 
-import "/styles/scss/nextjs-material-kit-pro.scss";
+import '/styles/scss/nextjs-material-kit-pro.scss';
 
-import "/styles/css/react-demo.css";
+import '/styles/css/react-demo.css';
 
-import "animate.css/animate.min.css";
+import 'animate.css/animate.min.css';
 
-import { AuthContextProvider } from "../context/authContext";
+import { AuthContextProvider } from '../context/authContext';
 
 const theme = createTheme({
   components: {
     MuiSelect: {
       defaultProps: {
-        variant: "standard",
+        variant: 'standard',
       },
     },
     MuiTab: {
       styleOverrides: {
         root: {
-          "&.Mui-selected": {
-            color: "#fff !important",
+          '&.Mui-selected': {
+            color: '#fff !important',
           },
         },
       },
@@ -57,20 +57,20 @@ const theme = createTheme({
   },
 });
 
-Router.events.on("routeChangeStart", (url) => {
-  document.body.classList.add("body-page-transition");
+Router.events.on('routeChangeStart', (url) => {
+  document.body.classList.add('body-page-transition');
   ReactDOM.render(
     <PageChange path={url} />,
-    document.getElementById("page-transition")
+    document.getElementById('page-transition')
   );
 });
-Router.events.on("routeChangeComplete", () => {
-  ReactDOM.unmountComponentAtNode(document.getElementById("page-transition"));
-  document.body.classList.remove("body-page-transition");
+Router.events.on('routeChangeComplete', () => {
+  ReactDOM.unmountComponentAtNode(document.getElementById('page-transition'));
+  document.body.classList.remove('body-page-transition');
 });
-Router.events.on("routeChangeError", () => {
-  ReactDOM.unmountComponentAtNode(document.getElementById("page-transition"));
-  document.body.classList.remove("body-page-transition");
+Router.events.on('routeChangeError', () => {
+  ReactDOM.unmountComponentAtNode(document.getElementById('page-transition'));
+  document.body.classList.remove('body-page-transition');
 });
 
 export default class MyApp extends App {
@@ -113,14 +113,14 @@ export default class MyApp extends App {
             content='width=device-width, initial-scale=1, shrink-to-fit=no'
           />
           {/* <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE" /> */}
-          <title>GomitasD'Landys</title>
+          <title>Carib-e</title>
         </Head>
         <ThemeProvider theme={theme}>
           <StyledEngineProvider injectFirst>
             <AuthContextProvider>
               <>
                 <Header
-                  brand="Gomitas"
+                  brand='Carib-e'
                   links={<HeaderLinks dropdownHoverColor='danger' />}
                   fixed
                   color='rose'
