@@ -1,56 +1,59 @@
 /*eslint-disable*/
-import React, { useState } from "react";
+import React, { useState } from 'react';
 // nodejs library that concatenates classes
-import classNames from "classnames";
-import makeStyles from "@mui/styles/makeStyles";
-import Tooltip from "@mui/material/Tooltip";
+import classNames from 'classnames';
+import makeStyles from '@mui/styles/makeStyles';
+import Tooltip from '@mui/material/Tooltip';
 
-import Datetime from "react-datetime";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import Dialog from "@mui/material/Dialog";
-import DialogTitle from "@mui/material/DialogTitle";
-import DialogContent from "@mui/material/DialogContent";
-import DialogActions from "@mui/material/DialogActions";
-import Slide from "@mui/material/Slide";
-import Close from "@mui/icons-material/Close";
-import Add from "@mui/icons-material/Add.js";
-import Remove from "@mui/icons-material/Remove.js";
-import Danger from "/components/Typography/Danger.js";
+import Datetime from 'react-datetime';
+import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogActions from '@mui/material/DialogActions';
+import Slide from '@mui/material/Slide';
+import Close from '@mui/icons-material/Close';
+import Add from '@mui/icons-material/Add.js';
+import Remove from '@mui/icons-material/Remove.js';
+import Danger from '/components/Typography/Danger.js';
 
 // core components
-import Parallax from "/components/Parallax/Parallax.js";
-import GridContainer from "/components/Grid/GridContainer.js";
-import GridItem from "/components/Grid/GridItem.js";
-import Footer from "/components/Footer/Footer.js";
-import Table from "/components/Table/Table.js";
-import Button from "/components/CustomButtons/Button.js";
-import Card from "/components/Card/Card.js";
-import CardBody from "/components/Card/CardBody.js";
-import CardHeader from "/components/Card/CardHeader.js";
-import CustomInput from "/components/CustomInput/CustomInput.js";
-import FormControl from "@mui/material/FormControl";
+import Parallax from '/components/Parallax/Parallax.js';
+import GridContainer from '/components/Grid/GridContainer.js';
+import GridItem from '/components/Grid/GridItem.js';
+import Footer from '/components/Footer/Footer.js';
+import Table from '/components/Table/Table.js';
+import Button from '/components/CustomButtons/Button.js';
+import Card from '/components/Card/Card.js';
+import CardBody from '/components/Card/CardBody.js';
+import CardHeader from '/components/Card/CardHeader.js';
+import CustomInput from '/components/CustomInput/CustomInput.js';
+import FormControl from '@mui/material/FormControl';
 
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 //context
-import { useAuthContext } from "../context/authContext.js";
+import { useAuthContext } from '../context/authContext.js';
 
 //firebase
-import { agregarCompra } from "../firebaseConexion/tickets.js";
-import { limpiarCarrito } from "../firebaseConexion/carrito.js";
-import { agregarAlCarrito as addProducto, quitarDelCarrito as removeProducto } from "../firebaseConexion/carrito";
+import { agregarCompra } from '../firebaseConexion/tickets.js';
+import { limpiarCarrito } from '../firebaseConexion/carrito.js';
+import {
+  agregarAlCarrito as addProducto,
+  quitarDelCarrito as removeProducto,
+} from '../firebaseConexion/carrito';
 
 //styles
-import shoppingCartStyle from "/styles/jss/nextjs-material-kit-pro/pages/shoppingCartStyle.js";
-import ModalStyle from "/styles/jss/nextjs-material-kit-pro/pages/componentsSections/javascriptStyles.js";
-import selectStyle from "/styles/jss/nextjs-material-kit-pro/pages/componentsSections/basicsStyle.js";
-import parallaxStyle from "/styles/jss/nextjs-material-kit-pro/pages/ecommerceStyle.js";
+import shoppingCartStyle from '/styles/jss/nextjs-material-kit-pro/pages/shoppingCartStyle.js';
+import ModalStyle from '/styles/jss/nextjs-material-kit-pro/pages/componentsSections/javascriptStyles.js';
+import selectStyle from '/styles/jss/nextjs-material-kit-pro/pages/componentsSections/basicsStyle.js';
+import parallaxStyle from '/styles/jss/nextjs-material-kit-pro/pages/ecommerceStyle.js';
 
 const useStyles = makeStyles(shoppingCartStyle);
 const useStylesDialog = makeStyles(ModalStyle);
 const useStylesSelect = makeStyles(selectStyle);
-const useStyleParralax = makeStyles(parallaxStyle)
+const useStyleParralax = makeStyles(parallaxStyle);
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction='down' ref={ref} {...props} />;
@@ -63,12 +66,12 @@ export default function Carrito() {
   const [desabilitar, setDesabilitar] = useState(false);
 
   //text for modal
-  const [nombre, setNombre] = useState("");
-  const [codigo, setCodigo] = useState("");
+  const [nombre, setNombre] = useState('');
+  const [codigo, setCodigo] = useState('');
   const [monto, setMonto] = useState(0);
-  const [fecha, setFecha] = useState("");
-  const [metodo, setMetodo] = useState("metodo");
-  const [descripcion, setDescripcion] = useState("");
+  const [fecha, setFecha] = useState('');
+  const [metodo, setMetodo] = useState('metodo');
+  const [descripcion, setDescripcion] = useState('');
 
   React.useEffect(() => {
     if (cart) {
@@ -92,7 +95,7 @@ export default function Carrito() {
             <small className={classes.tdNumberSmall}>$</small>
             {producto.precio}
           </span>,
-          <span key={index}>{producto.cantidad + " "}</span>,
+          <span key={index}>{producto.cantidad + ' '}</span>,
           <span key={index}>
             <small className={classes.tdNumberSmall}>$</small>
             {producto.precioTotal}
@@ -104,7 +107,11 @@ export default function Carrito() {
             placement='top'
             classes={{ tooltip: classes.tooltip }}
           >
-            <Button onClick={() => agregarAlCarrito(producto)} link className={classes.actionButton}>
+            <Button
+              onClick={() => agregarAlCarrito(producto)}
+              link
+              className={classes.actionButton}
+            >
               <Add />
             </Button>
           </Tooltip>,
@@ -115,7 +122,11 @@ export default function Carrito() {
             placement='top'
             classes={{ tooltip: classes.tooltip }}
           >
-            <Button onClick={() => quitarDelCarrito(producto)} link className={classes.actionButton}>
+            <Button
+              onClick={() => quitarDelCarrito(producto)}
+              link
+              className={classes.actionButton}
+            >
               <Remove />
             </Button>
           </Tooltip>,
@@ -136,7 +147,7 @@ export default function Carrito() {
       });
       tableData.push({
         purchase: true,
-        colspan: "3",
+        colspan: '3',
         amount: (
           <span>
             <small>$</small>
@@ -165,12 +176,12 @@ export default function Carrito() {
     setLoginModal(true);
   };
   const limpiarCampos = () => {
-    setNombre("");
-    setCodigo("");
-    setMonto("");
-    setFecha("");
-    setMetodo("metodo");
-    setDescripcion("");
+    setNombre('');
+    setCodigo('');
+    setMonto('');
+    setFecha('');
+    setMetodo('metodo');
+    setDescripcion('');
   };
   const generarOrden = () => {
     setLoginModal(false);
@@ -190,32 +201,36 @@ export default function Carrito() {
         limpiarCarrito(user.uid);
       })
       .catch((err) => {
-        console.log("something went wrong", err);
+        console.log('something went wrong', err);
       });
   };
 
   const agregarAlCarrito = (producto) => {
-    addProducto(user.uid, producto).then(res => {
-      console.log("añadiendo al carrito: ", res)
-    }).catch(error => {
-      console.log("Error añadiendo al carrito ", error)
-    })
-  }
+    addProducto(user.uid, producto)
+      .then((res) => {
+        console.log('añadiendo al carrito: ', res);
+      })
+      .catch((error) => {
+        console.log('Error añadiendo al carrito ', error);
+      });
+  };
 
   const quitarDelCarrito = (producto) => {
-    removeProducto(user.uid, producto).then(res => {
-      console.log("Quitando al carrito: ", res)
-    }).catch(error => {
-      console.log("Quitando añadiendo al carrito ", error)
-    })
-  }
+    removeProducto(user.uid, producto)
+      .then((res) => {
+        console.log('Quitando al carrito: ', res);
+      })
+      .catch((error) => {
+        console.log('Quitando añadiendo al carrito ', error);
+      });
+  };
 
   return (
     <div>
       <Dialog
         classes={{
           root: classesDialog.modalRoot,
-          paper: classesDialog.modal + " " + classesDialog.modalLogin,
+          paper: classesDialog.modal + ' ' + classesDialog.modalLogin,
         }}
         open={loginModal}
         TransitionComponent={Transition}
@@ -232,7 +247,7 @@ export default function Carrito() {
             <CardHeader
               color='primary'
               className={
-                classesDialog.textCenter + " " + classesDialog.cardLoginHeader
+                classesDialog.textCenter + ' ' + classesDialog.cardLoginHeader
               }
             >
               <Button
@@ -242,7 +257,7 @@ export default function Carrito() {
                 aria-label='Close'
                 onClick={() => setLoginModal(false)}
               >
-                {" "}
+                {' '}
                 <Close className={classesDialog.modalClose} />
               </Button>
               <h5 className={classesDialog.cardTitleWhite}>Orden de compra</h5>
@@ -262,7 +277,7 @@ export default function Carrito() {
                     fullWidth: true,
                   }}
                   inputProps={{
-                    placeholder: "nombre",
+                    placeholder: 'nombre',
                   }}
                 />
                 <CustomInput
@@ -273,7 +288,7 @@ export default function Carrito() {
                     fullWidth: true,
                   }}
                   inputProps={{
-                    placeholder: "referencia",
+                    placeholder: 'referencia',
                   }}
                 />
                 <CustomInput
@@ -285,8 +300,8 @@ export default function Carrito() {
                   }}
                   inputProps={{
                     disabled: true,
-                    type: "number",
-                    placeholder: "monto",
+                    type: 'number',
+                    placeholder: 'monto',
                   }}
                 />
                 <FormControl fullWidth>
@@ -295,10 +310,10 @@ export default function Carrito() {
                     locale='es'
                     id='login-modal-date'
                     onChange={(e) =>
-                      e.format ? setFecha(e.format("MM/DD/YYYY")) : setFecha("")
+                      e.format ? setFecha(e.format('MM/DD/YYYY')) : setFecha('')
                     }
                     timeFormat={false}
-                    inputProps={{ placeholder: "fecha del pago" }}
+                    inputProps={{ placeholder: 'fecha del pago' }}
                   />
                 </FormControl>
                 <br />
@@ -315,8 +330,8 @@ export default function Carrito() {
                     value={metodo}
                     onChange={(e) => setMetodo(e.target.value.toLowerCase())}
                     inputProps={{
-                      name: "simpleSelect",
-                      id: "simple-select",
+                      name: 'simpleSelect',
+                      id: 'simple-select',
                     }}
                   >
                     <MenuItem
@@ -366,7 +381,7 @@ export default function Carrito() {
                     fullWidth: true,
                   }}
                   inputProps={{
-                    placeholder: "notas adicionales",
+                    placeholder: 'notas adicionales',
                     multiline: true,
                     rows: 5,
                   }}
@@ -377,18 +392,23 @@ export default function Carrito() {
           <DialogActions
             className={
               classesDialog.modalFooter +
-              " " +
+              ' ' +
               classesDialog.justifyContentCenter
             }
           >
-            <Button onClick={() => generarOrden()} color='primary' size='lg' disabled={desabilitar}>
+            <Button
+              onClick={() => generarOrden()}
+              color='primary'
+              size='lg'
+              disabled={desabilitar}
+            >
               Generar orden
             </Button>
           </DialogActions>
         </Card>
       </Dialog>
 
-      <Parallax image='/img/fondo/Background.png' filter='dark' small>
+      <Parallax image='/img/ecommerce_img.jpeg' filter='dark' small>
         <div className={classesParallax.container}>
           <GridContainer>
             <GridItem
@@ -403,7 +423,8 @@ export default function Carrito() {
               <div className={classesParallax.brand}>
                 <h1 className={classesParallax.title}>Carrito</h1>
                 <h4>
-                  ¡Sí todos los productos que deseas estan en el listado completa la compra!
+                  ¡Sí todos los productos que deseas estan en el listado
+                  completa la compra!
                 </h4>
               </div>
             </GridItem>
@@ -420,17 +441,17 @@ export default function Carrito() {
                   Productos <span>({cart.productos.length})</span>
                 </h3>
               ) : (
-                  <div></div>
-                )}
+                <div></div>
+              )}
               {cart && cart.productos.length > 0 ? (
                 <Table
                   tableHead={[
-                    "",
-                    "PRODUCTO",
-                    "PRECIO",
-                    "CANTIDAD",
-                    "MONTO ACUMULADO",
-                    "",
+                    '',
+                    'PRODUCTO',
+                    'PRECIO',
+                    'CANTIDAD',
+                    'MONTO ACUMULADO',
+                    '',
                   ]}
                   tableData={tableData}
                   tableShopping
@@ -445,36 +466,36 @@ export default function Carrito() {
                   customHeadClassesForCells={[0, 1, 2, 3, 4, 5]}
                   customCellClasses={[
                     classes.tdName,
-                    classes.customFont + " " + classes.textCenter,
-                    classes.customFont + " " + classes.textCenter,
-                    classes.tdNumber + " " + classes.textCenter,
-                    classes.tdNumber + " " + classes.textCenter,
-                    classes.tdNumber + " " + classes.textRight,
+                    classes.customFont + ' ' + classes.textCenter,
+                    classes.customFont + ' ' + classes.textCenter,
+                    classes.tdNumber + ' ' + classes.textCenter,
+                    classes.tdNumber + ' ' + classes.textCenter,
+                    classes.tdNumber + ' ' + classes.textRight,
                   ]}
                   customClassesForCells={[0, 1, 2, 3, 4, 5]}
                 />
               ) : (
-                  <div className={classes.container}>
-                    <br />
-                    <GridContainer>
-                      <GridItem
-                        md={6}
-                        sm={6}
-                        className={classNames(
-                          classes.mlAuto,
-                          classes.mrAuto,
-                          classes.textCenter
-                        )}
-                      >
-                        <Danger>
-                          <h2>No hay productos en el carrito</h2>
-                        </Danger>
-                      </GridItem>
-                    </GridContainer>
-                    <br />
-                    <br />
-                  </div>
-                )}
+                <div className={classes.container}>
+                  <br />
+                  <GridContainer>
+                    <GridItem
+                      md={6}
+                      sm={6}
+                      className={classNames(
+                        classes.mlAuto,
+                        classes.mrAuto,
+                        classes.textCenter
+                      )}
+                    >
+                      <Danger>
+                        <h2>No hay productos en el carrito</h2>
+                      </Danger>
+                    </GridItem>
+                  </GridContainer>
+                  <br />
+                  <br />
+                </div>
+              )}
             </CardBody>
           </Card>
         </div>
@@ -486,7 +507,7 @@ export default function Carrito() {
               &copy; {1900 + new Date().getYear()}
               <a href='' target='_blank'>
                 , Hivek
-              </a>{" "}
+              </a>{' '}
             </div>
           </div>
         }
